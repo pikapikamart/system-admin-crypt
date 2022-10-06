@@ -7,7 +7,7 @@ export const postSchema = z
     content: z
       .string({ required_error: "Content is required" })
       .min(1, "Content should not be empty"),
-    tags: z.array(coinSchema)
+    tags: z.array(coinSchema).optional()
   })
 
 export const replyPostSchema = z
@@ -27,6 +27,9 @@ export const postIdSchema = z
       .min(1, "Post Id should not be empty")
   })
 
+export const editPostSchema = postIdSchema.merge(postSchema)
+
 export type PostSchema = TypeOf<typeof postSchema>
 export type ReplyPostSchema = TypeOf<typeof replyPostSchema>
 export type PostIdSchema = TypeOf<typeof postIdSchema>
+export type EditPostSchema = TypeOf<typeof editPostSchema>

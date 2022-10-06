@@ -1,12 +1,14 @@
 import { 
   createPostHandler, 
   deletePostHandler, 
+  editPostHandler, 
   getAllPostHandler, 
   getPostHandler, 
   replyPostHandler } from "../controllers/post.controller";
 import { isValidUser } from "../middlewares/route.middleware";
 import { createRouter } from "../router/createRouter";
 import { 
+  editPostSchema,
   postIdSchema,
   postSchema, 
   replyPostSchema } from "../schemas/post.schema";
@@ -33,4 +35,8 @@ export const postRouter = createRouter()
   .mutation("delete", {
     input: postIdSchema,
     resolve: ({ ctx, input }) => deletePostHandler(ctx, input)
+  })
+  .mutation("edit", {
+    input: editPostSchema,
+    resolve: ({ ctx, input }) => editPostHandler(ctx, input)
   })

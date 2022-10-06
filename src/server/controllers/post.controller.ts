@@ -1,5 +1,6 @@
 import { UserContext } from "../middlewares/route.middleware"
 import { 
+  EditPostSchema,
   PostIdSchema,
   PostSchema, 
   ReplyPostSchema } from "../schemas/post.schema";
@@ -7,7 +8,6 @@ import {
   createPostService, 
   deletePostService, 
   findAllPostAggregator, 
-  findPostPopulatorService, 
   findPostService, 
   updatePostService } from "../services/post.service";
 import { updateUserService } from "../services/user.service";
@@ -93,14 +93,15 @@ export const replyPostHandler = async( { user }: UserContext, reply: ReplyPostSc
   return trpcSuccess(true, "Successfully replied to post")
 }
 
-export const deletePostHandler = async( { user }: UserContext, post: PostIdSchema ) => {
+export const deletePostHandler = async( { user }: UserContext, { postId }: PostIdSchema ) => {
+  const post = postValidator(await findPostService({ postId }))
 
-  const deletedPost = await deletePostService({ postId: post.postId })
-  
-  if ( !deletedPost ) {
-    return trpcError("NOT_FOUND", "No post matches post id")
+  if ( !user.posts?.find(ownedPost => ownedPost.equals(post._id)) ) {
+    return trpcError("FORBIDDEN", "Can only delete owned post")
   }
 
+  const deletedPost = postValidator(await deletePostService({ postId: post.postId }))
+  
   await updateUserService(
     { email: user.email },
     {
@@ -111,4 +112,21 @@ export const deletePostHandler = async( { user }: UserContext, post: PostIdSchem
   )
 
   return trpcSuccess(true, "Successfully deleted post")
+}
+
+export const editPostHandler = async( { user }: UserContext, editBody: EditPostSchema ) => {
+  const post = postValidator( await findPostService({ postId: editBody.postId }) )
+
+  if ( !user.posts?.find(ownedPost => ownedPost.equals(post._id)) ) {
+    return trpcError("FORBIDDEN", "Can only edit owned post")
+  }
+
+  const { postId, ...restEdit } = editBody
+
+  await updatePostService(
+    { postId: editBody.postId },
+    restEdit
+  )
+
+  return trpcSuccess(true, "Successfully updated post")
 }
