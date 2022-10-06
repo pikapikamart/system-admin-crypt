@@ -4,11 +4,20 @@ import {
   UserDocument } from "./user.model"
 
 
+export type Reply = {
+  content: string,
+  owner: {
+    username: string,
+    email: string
+  }
+}
+
 export type Post = {
   postId: string,
   owner: UserDocument["_id"],
   content: string,
-  tags?: Coin[]
+  tags?: Coin[],
+  replies?: Reply[]
 }
 
 export type PostDocument = Post & mongoose.Document & {
@@ -35,6 +44,13 @@ const postSchema: mongoose.Schema<PostDocument> = new mongoose.Schema({
     id: String,
     symbol: String,
     name: String
+  }],
+  replies: [{
+    content: String,
+    owner: {
+      username: String,
+      email: String
+    }
   }]
 },{ timestamps: true })
 

@@ -34,3 +34,11 @@ export const customNanoid = ( length: number ) => {
 
   return nanoid(length)
 }
+
+export const postValidator = <T, >( post: T ) => {
+  if ( !post ) {
+    return trpcError("NOT_FOUND", "No post found with this post id")
+  }
+
+  return post
+}

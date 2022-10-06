@@ -10,4 +10,15 @@ export const postSchema = z
     tags: z.array(coinSchema)
   })
 
+export const replyPostSchema = z
+  .object({
+    postId: z
+      .string({ required_error: "Post Id is required" })
+      .min(1, "Post Id should not be empty"),
+    content: z
+      .string({ required_error: "Content is required" })
+      .min(1, "Content should not be empty"),
+  })
+
 export type PostSchema = TypeOf<typeof postSchema>
+export type ReplyPostSchema = TypeOf<typeof replyPostSchema>
