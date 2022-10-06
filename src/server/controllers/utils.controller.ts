@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { TRPC_ERROR_CODE_KEY } from "@trpc/server/rpc";
+import { customAlphabet } from "nanoid";
 
 
 export const trpcError = (
@@ -12,7 +13,7 @@ export const trpcError = (
   })
 }
 
-export const trpcSucess = <T,>( success: boolean, data: T ) => {
+export const trpcSuccess = <T,>( success: boolean, data: T ) => {
 
   return {
     success,
@@ -26,4 +27,10 @@ export const loginValidator = <T,>( user: T ) => {
   }
 
   return user
+}
+
+export const customNanoid = ( length: number ) => {
+  const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
+
+  return nanoid(length)
 }

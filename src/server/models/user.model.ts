@@ -4,18 +4,24 @@ import bcrypt from "bcrypt"
 
 // add id
 export type User = {
+  userId: string,
   fullname: string,
   username: string,
   email: string,
-  password: string
+  password: string,
+  watchlist?: string[]
 }
 
 export type UserDocument = User & mongoose.Document & {
   comparePassword: ( password: string ) => Promise<boolean>
 }
 
-
 const userSchema: mongoose.Schema<UserDocument> = new mongoose.Schema({
+  userId: {
+    type: String,
+    required: true,
+    unique: true
+  },
   fullname: {
     type: String,
     required: true
@@ -32,7 +38,8 @@ const userSchema: mongoose.Schema<UserDocument> = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  watchlist: [String]
 })
 
 userSchema.pre("save", async function( next ){

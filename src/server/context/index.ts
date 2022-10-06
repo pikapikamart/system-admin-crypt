@@ -23,7 +23,7 @@ interface CreateContextOptions {
 export async function createContext( ctx: trpcNext.CreateNextContextOptions ){
   // for API-response caching see https://trpc.io/docs/caching
   const { req, res } = ctx
-  const token = await getToken(ctx)
+  const token = await getToken({ req })
 
   return {
     req,

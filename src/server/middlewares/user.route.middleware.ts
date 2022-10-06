@@ -1,6 +1,7 @@
 import { MiddlewareResult } from "@trpc/server/src/internals/middlewares";
 import { Context } from "../context";
 import { loginValidator, trpcError } from "../controllers/utils.controller";
+import { UserDocument } from "../models/user.model";
 import { findUser } from "../services/user.service";
 
 
@@ -10,7 +11,7 @@ type TrpcNext = {
 };
 
 export const isValidUser = async( ctx: Context, next: TrpcNext ) => {
-
+  
   if ( !ctx.token ) {
     return trpcError("UNAUTHORIZED", "Login first")
   }
@@ -23,4 +24,8 @@ export const isValidUser = async( ctx: Context, next: TrpcNext ) => {
       user
     }
   })
+}
+
+export type UserContext = Context & {
+  user: UserDocument
 }

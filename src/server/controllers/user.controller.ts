@@ -1,11 +1,15 @@
+import { UserContext } from "../middlewares/user.route.middleware";
+import { CryptoSymbolSchema } from "../schemas/crypto.schema";
 import { LoginUserSchema, UserSchema } from "../schemas/user.schema";
 import { 
   createUser, 
-  findUser } from "../services/user.service";
+  findUser, 
+  updateUser} from "../services/user.service";
 import { 
+  customNanoid,
   loginValidator,
   trpcError, 
-  trpcSucess } from "./utils.controller";
+  trpcSuccess } from "./utils.controller";
 
 
 export const signupUserHandler = async( signupBody: UserSchema ) => {
@@ -15,9 +19,12 @@ export const signupUserHandler = async( signupBody: UserSchema ) => {
     return trpcError("CONFLICT", "Email is already in use")
   }
 
-  await createUser(signupBody)
+  await createUser({
+    ...signupBody,
+    userId: customNanoid(10)
+  })
 
-  return trpcSucess(true, "Account has been created")
+  return trpcSuccess(true, "Account has been created")
 }
 
 export const validateUserHandler = async( loginBody: LoginUserSchema ) => {
@@ -27,5 +34,32 @@ export const validateUserHandler = async( loginBody: LoginUserSchema ) => {
     return trpcError("CONFLICT", "Password does not match")
   }
 
-  return trpcSucess(true, "Account validated")
+  return trpcSuccess(true, "Account validated")
+}
+
+export const coinWatchlistHandler = async( { user }: UserContext, coin: CryptoSymbolSchema ) => {
+  
+  if ( user.watchlist?.find(token => token===coin.symbol) ) {
+    await updateUser(
+      { email: user.email },
+      {
+        $pull: {
+          watchlist: coin.symbol
+        }
+      }
+    )
+
+    return trpcSuccess(true, "Coin has been removed from watchlist")
+  }
+
+  await updateUser(
+    { email: user.email },
+    {
+      $push: {
+        watchlist: coin.symbol
+      }
+    }
+  )
+
+  return trpcSuccess(true, "Coin has been added to watchlist")
 }
