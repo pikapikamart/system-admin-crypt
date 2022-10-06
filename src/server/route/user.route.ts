@@ -1,6 +1,7 @@
 import { 
   signupUserHandler, 
   validateUserHandler } from "../controllers/user.controller";
+import { isValidUser } from "../middlewares/user.route.middleware";
 import { createRouter } from "../router/createRouter";
 import { 
   loginUserSchema, 
@@ -16,3 +17,6 @@ export const userRouter = createRouter()
     input: userSchema,
     resolve: ({ input }) => signupUserHandler( input )
   })
+  // requires authentication
+  .middleware(({ ctx, next }) => isValidUser(ctx, next))
+  
