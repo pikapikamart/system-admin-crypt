@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 
 
+// add id
 export type User = {
   fullname: string,
   username: string,

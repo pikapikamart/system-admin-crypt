@@ -19,3 +19,11 @@ export const trpcSucess = <T,>( success: boolean, data: T ) => {
     data
   }
 }
+
+export const loginValidator = <T,>( user: T ) => {
+  if ( !user ) {
+    return trpcError("NOT_FOUND", "No user found with this email")
+  }
+
+  return user
+}
