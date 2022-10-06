@@ -1,20 +1,20 @@
 import mongoose from "mongoose"
-import { 
-  Coin, 
-  UserDocument } from "./user.model"
+import { Coin } from "./user.model"
 
+
+type Owner =  {
+  username: string,
+  email: string
+}
 
 export type Reply = {
   content: string,
-  owner: {
-    username: string,
-    email: string
-  }
+  owner: Owner
 }
 
 export type Post = {
   postId: string,
-  owner: UserDocument["_id"],
+  owner: Owner,
   content: string,
   tags?: Coin[],
   replies?: Reply[]
@@ -32,9 +32,8 @@ const postSchema: mongoose.Schema<PostDocument> = new mongoose.Schema({
     unique: true
   },
   owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true
+    username: String,
+    email: String
   },
   content: {
     type: String,

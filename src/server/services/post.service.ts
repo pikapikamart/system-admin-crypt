@@ -21,8 +21,11 @@ export const updatePostService = async(
   postModel.findOneAndUpdate(query, update)
 )
 
-export const findPostService = ( post: FilterQuery<Post> ) => (
-  postModel.findOne(post)
+export const findPostService = ( 
+  post: FilterQuery<Post>,
+  projection: ProjectionType<Post> = ""
+) => (
+  postModel.findOne(post, projection)
 )
 
 export const deletePostService = ( post: FilterQuery<Post> ) => (
@@ -37,8 +40,6 @@ export const findPostPopulatorService = async(
   postModel.findOne(query, projection).populate(populate)
 )
 
-export const findAllPostService = (
-  aggregate: PipelineStage[]
-) => (
+export const findAllPostAggregator = async( aggregate: PipelineStage[] ) => (
   postModel.aggregate(aggregate)
 )

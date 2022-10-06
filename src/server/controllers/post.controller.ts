@@ -6,7 +6,7 @@ import {
 import { 
   createPostService, 
   deletePostService, 
-  findAllPostService, 
+  findAllPostAggregator, 
   findPostPopulatorService, 
   findPostService, 
   updatePostService } from "../services/post.service";
@@ -19,14 +19,11 @@ import {
 
 
 // --------Queries--------
+
 export const getPostHandler = async( { postId }: PostIdSchema ) =>{
-  const post = postValidator(await findPostPopulatorService(
+  const post = postValidator(await findPostService(
     { postId },
     "-_id",
-    {
-      path: "owner",
-      select: "username email"
-    }
   ))
 
   post.owner.email = post.owner.email.split("@")[0]
@@ -35,55 +32,29 @@ export const getPostHandler = async( { postId }: PostIdSchema ) =>{
 }
 
 export const getAllPostHandler = async() => {
-  const posts = await findAllPostService(
-    [
-      {
-        $lookup: {
-          from: "users",
-          localField: "owner",
-          foreignField: "_id",
-          as: "owner",
-          pipeline: [
-            {
-              $project: {
-                username: 1,
-                email: 1,
-                _id: 0,
-              },
-            }
-          ]
-        }
-      },
-      {
-        $unwind: "$owner"
-      },
-      {
-        $set: {
-          replies: {
-            $size: "$replies"
-          },
-          "owner.email" : {
-            $first: {
-              $split: ["$owner.email", "@"]
-            }
-          }
+  const posts = await findAllPostAggregator([
+    {
+      $set: {
+        replies: {
+          $size: "$replies"
         }
       }
-    ]
-  )
+    }
+  ])
 
   return trpcSuccess(true, posts)
-
 }
 
 // --------Mutations--------
-
 
 export const createPostHandler = async( { user }: UserContext, post: PostSchema ) =>{
   
   const createdPost = await createPostService({
     ...post,
-    owner: user._id,
+    owner: {
+      username: user.username,
+      email: user.email.split("@")[0]
+    },
     postId: customNanoid(10)
   })
 
