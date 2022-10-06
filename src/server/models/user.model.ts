@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
+import { PostDocument } from "./post.model"
 
 
 export type Coin = {
@@ -14,6 +15,7 @@ export type User = {
   username: string,
   email: string,
   password: string,
+  bio?: string,
   watchlist?: Coin[],
   posts?: PostDocument["_id"][]
 }
@@ -45,6 +47,7 @@ const userSchema: mongoose.Schema<UserDocument> = new mongoose.Schema({
     type: String,
     required: true
   },
+  bio: String,
   watchlist: [{
     id: String,
     symbol: String,

@@ -22,5 +22,16 @@ export const userSchema = z
   })
   .merge(loginUserSchema)
 
+export const updateUserSchema = z
+.object({
+  username: z
+    .string({ required_error: "Username is required" })
+    .min(1, "Username should follow proper format"),
+  bio: z
+    .string()
+    .optional()
+})
+
 export type UserSchema = TypeOf<typeof userSchema>
 export type LoginUserSchema = TypeOf<typeof loginUserSchema>
+export type UpdateUserSchema = TypeOf<typeof updateUserSchema>

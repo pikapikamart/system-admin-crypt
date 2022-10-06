@@ -1,12 +1,14 @@
 import { 
   coinWatchlistHandler,
   signupUserHandler, 
+  updateProfileHandler, 
   validateUserHandler } from "../controllers/user.controller";
 import { isValidUser } from "../middlewares/route.middleware";
 import { createRouter } from "../router/createRouter";
 import { coinSchema } from "../schemas/coin.schema";
 import { 
   loginUserSchema, 
+  updateUserSchema, 
   userSchema } from "../schemas/user.schema";
 
 
@@ -24,4 +26,8 @@ export const userRouter = createRouter()
   .mutation("watchlist", {
     input: coinSchema,
     resolve: ({ ctx, input }) => coinWatchlistHandler(ctx, input)
+  })
+  .mutation("update-profile", {
+    input: updateUserSchema,
+    resolve: ({ ctx, input }) => updateProfileHandler(ctx, input)
   })

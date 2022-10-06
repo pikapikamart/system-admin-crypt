@@ -1,6 +1,6 @@
 import { UserContext } from "../middlewares/route.middleware";
 import { CoinSchema } from "../schemas/coin.schema";
-import { LoginUserSchema, UserSchema } from "../schemas/user.schema";
+import { LoginUserSchema, UpdateUserSchema, UserSchema } from "../schemas/user.schema";
 import { 
   createUserService, 
   findUserService, 
@@ -62,4 +62,14 @@ export const coinWatchlistHandler = async( { user }: UserContext, coin: CoinSche
   )
 
   return trpcSuccess(true, "Coin has been added to watchlist")
+}
+
+export const updateProfileHandler = async( { user }: UserContext, update: UpdateUserSchema ) => {
+
+  await updateUserService(
+    { email: user.email },
+    update
+  )
+
+  return trpcSuccess(true, "Profile has been updated")
 }
