@@ -1,6 +1,7 @@
 import { 
   createPostHandler, 
   deletePostHandler, 
+  getAllPostHandler, 
   getPostHandler, 
   replyPostHandler } from "../controllers/post.controller";
 import { isValidUser } from "../middlewares/route.middleware";
@@ -15,6 +16,9 @@ export const postRouter = createRouter()
   .query("get", {
     input: postIdSchema,
     resolve: ({ input }) => getPostHandler(input)
+  })
+  .query("get-all", {
+    resolve: () => getAllPostHandler()
   })
   // need authentication
   .middleware(({ ctx, next }) => isValidUser(ctx, next))

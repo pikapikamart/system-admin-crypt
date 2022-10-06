@@ -1,6 +1,7 @@
 import { 
   DocumentDefinition, 
   FilterQuery, 
+  PipelineStage, 
   PopulateOptions, 
   ProjectionType, 
   UpdateQuery} from "mongoose";
@@ -34,4 +35,10 @@ export const findPostPopulatorService = async(
   populate: PopulateOptions
 ) => (
   postModel.findOne(query, projection).populate(populate)
+)
+
+export const findAllPostService = (
+  aggregate: PipelineStage[]
+) => (
+  postModel.aggregate(aggregate)
 )

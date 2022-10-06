@@ -6,6 +6,7 @@ import {
 import { 
   createPostService, 
   deletePostService, 
+  findAllPostService, 
   findPostPopulatorService, 
   findPostService, 
   updatePostService } from "../services/post.service";
@@ -33,6 +34,47 @@ export const getPostHandler = async( { postId }: PostIdSchema ) =>{
   return trpcSuccess(true, post)
 }
 
+export const getAllPostHandler = async() => {
+  const posts = await findAllPostService(
+    [
+      {
+        $lookup: {
+          from: "users",
+          localField: "owner",
+          foreignField: "_id",
+          as: "owner",
+          pipeline: [
+            {
+              $project: {
+                username: 1,
+                email: 1,
+                _id: 0,
+              },
+            }
+          ]
+        }
+      },
+      {
+        $unwind: "$owner"
+      },
+      {
+        $set: {
+          replies: {
+            $size: "$replies"
+          },
+          "owner.email" : {
+            $first: {
+              $split: ["$owner.email", "@"]
+            }
+          }
+        }
+      }
+    ]
+  )
+
+  return trpcSuccess(true, posts)
+
+}
 
 // --------Mutations--------
 
