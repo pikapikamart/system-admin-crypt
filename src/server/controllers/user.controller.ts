@@ -7,13 +7,15 @@ import {
   trpcSucess } from "./utils.controller";
 
 
-export const validateUserHandler = async( user: UserSchema ) => {
+export const signupUserHandler = async( user: UserSchema ) => {
   const foundUser = await findUser({ email: user.email })
 
   if ( foundUser ) {
     return trpcError("CONFLICT", "Email is already in use")
   }
 
-  return trpcSucess(true, "Account information validated")
+  await createUser(user)
+
+  return trpcSucess(true, "Account has been created")
 }
 
