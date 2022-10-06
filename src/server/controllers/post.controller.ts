@@ -3,13 +3,38 @@ import {
   PostIdSchema,
   PostSchema, 
   ReplyPostSchema } from "../schemas/post.schema";
-import { createPostService, deletePostService, findPostService, updatePostService } from "../services/post.service";
+import { 
+  createPostService, 
+  deletePostService, 
+  findPostPopulatorService, 
+  findPostService, 
+  updatePostService } from "../services/post.service";
 import { updateUserService } from "../services/user.service";
 import { 
   customNanoid, 
   postValidator, 
   trpcError, 
   trpcSuccess } from "./utils.controller";
+
+
+// --------Queries--------
+export const getPostHandler = async( { postId }: PostIdSchema ) =>{
+  const post = postValidator(await findPostPopulatorService(
+    { postId },
+    "-_id",
+    {
+      path: "owner",
+      select: "username email"
+    }
+  ))
+
+  post.owner.email = post.owner.email.split("@")[0]
+
+  return trpcSuccess(true, post)
+}
+
+
+// --------Mutations--------
 
 
 export const createPostHandler = async( { user }: UserContext, post: PostSchema ) =>{

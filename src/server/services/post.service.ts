@@ -1,6 +1,8 @@
 import { 
   DocumentDefinition, 
   FilterQuery, 
+  PopulateOptions, 
+  ProjectionType, 
   UpdateQuery} from "mongoose";
 import { 
   Post, 
@@ -24,4 +26,12 @@ export const findPostService = ( post: FilterQuery<Post> ) => (
 
 export const deletePostService = ( post: FilterQuery<Post> ) => (
   postModel.findOneAndDelete(post)
+)
+
+export const findPostPopulatorService = async(
+  query: FilterQuery<Post>,
+  projection: ProjectionType<Post>,
+  populate: PopulateOptions
+) => (
+  postModel.findOne(query, projection).populate(populate)
 )
