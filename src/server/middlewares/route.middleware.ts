@@ -2,7 +2,7 @@ import { MiddlewareResult } from "@trpc/server/src/internals/middlewares";
 import { Context } from "../context";
 import { loginValidator, trpcError } from "../controllers/utils.controller";
 import { UserDocument } from "../models/user.model";
-import { findUser } from "../services/user.service";
+import { findUserService } from "../services/user.service";
 
 
 type TrpcNext = {
@@ -16,7 +16,7 @@ export const isValidUser = async( ctx: Context, next: TrpcNext ) => {
     return trpcError("UNAUTHORIZED", "Login first")
   }
 
-  const user = loginValidator(await findUser({ email: ctx.token.email }))
+  const user = loginValidator(await findUserService({ email: ctx.token.email }))
 
   return next({
     ctx: {

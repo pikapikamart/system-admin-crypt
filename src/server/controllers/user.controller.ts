@@ -1,10 +1,10 @@
-import { UserContext } from "../middlewares/user.route.middleware";
-import { CryptoSymbolSchema } from "../schemas/crypto.schema";
+import { UserContext } from "../middlewares/route.middleware";
+import { CoinSchema } from "../schemas/coin.schema";
 import { LoginUserSchema, UserSchema } from "../schemas/user.schema";
 import { 
-  createUser, 
-  findUser, 
-  updateUser} from "../services/user.service";
+  createUserService, 
+  findUserService, 
+  updateUserService} from "../services/user.service";
 import { 
   customNanoid,
   loginValidator,
@@ -13,13 +13,13 @@ import {
 
 
 export const signupUserHandler = async( signupBody: UserSchema ) => {
-  const foundUser = await findUser({ email: signupBody.email })
+  const foundUser = await findUserService({ email: signupBody.email })
 
   if ( foundUser ) {
     return trpcError("CONFLICT", "Email is already in use")
   }
 
-  await createUser({
+  await createUserService({
     ...signupBody,
     userId: customNanoid(10)
   })
@@ -28,7 +28,7 @@ export const signupUserHandler = async( signupBody: UserSchema ) => {
 }
 
 export const validateUserHandler = async( loginBody: LoginUserSchema ) => {
-  const user = loginValidator(await findUser({ email: loginBody.email }))
+  const user = loginValidator(await findUserService({ email: loginBody.email }))
 
   if ( !await user.comparePassword(loginBody.password) ) {
     return trpcError("CONFLICT", "Password does not match")
@@ -37,10 +37,10 @@ export const validateUserHandler = async( loginBody: LoginUserSchema ) => {
   return trpcSuccess(true, "Account validated")
 }
 
-export const coinWatchlistHandler = async( { user }: UserContext, coin: CryptoSymbolSchema ) => {
+export const coinWatchlistHandler = async( { user }: UserContext, coin: CoinSchema ) => {
 
   if ( user.watchlist?.find(token => token.id===coin.id) ) {
-    await updateUser(
+    await updateUserService(
       { email: user.email },
       {
         $pull: {
@@ -52,7 +52,7 @@ export const coinWatchlistHandler = async( { user }: UserContext, coin: CryptoSy
     return trpcSuccess(true, "Coin has been removed from watchlist")
   }
 
-  await updateUser(
+  await updateUserService(
     { email: user.email },
     {
       $push: {

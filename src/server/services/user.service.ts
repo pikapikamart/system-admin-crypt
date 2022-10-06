@@ -7,15 +7,15 @@ import {
   userModel } from "../models/user.model";
 
 
-export const findUser = async( user: FilterQuery<User> ) => (
+export const findUserService = async( user: FilterQuery<User> ) => (
   userModel.findOne(user)
 )
 
-export const createUser = async( user: DocumentDefinition<User> ) => (
+export const createUserService = async( user: DocumentDefinition<User> ) => (
   userModel.create(user)
 )
 
-export const updateUser = async(
+export const updateUserService = async(
   query: FilterQuery<User>,
   update: UpdateQuery<User>
 ) => (

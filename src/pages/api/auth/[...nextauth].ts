@@ -2,7 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth/next"
 import { NextAuthOptions } from "next-auth"
 import { connectDatabase } from "@/src/server/database";
-import { findUser } from "@/src/server/services/user.service";
+import { findUserService } from "@/src/server/services/user.service";
 
 
 export const nextAuthOptions: NextAuthOptions = {
@@ -25,7 +25,7 @@ export const nextAuthOptions: NextAuthOptions = {
           username: ""
         }
         await connectDatabase()
-        const foundUser = await findUser({ email: user.email })
+        const foundUser = await findUserService({ email: user.email })
 
         if ( !foundUser || !await foundUser.comparePassword(user.password as string) ) {
           return Promise.reject(new Error("Please check your credentials"))

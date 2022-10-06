@@ -14,7 +14,8 @@ export type User = {
   username: string,
   email: string,
   password: string,
-  watchlist?: Coin[]
+  watchlist?: Coin[],
+  posts?: PostDocument["_id"][]
 }
 
 export type UserDocument = User & mongoose.Document & {
@@ -48,6 +49,10 @@ const userSchema: mongoose.Schema<UserDocument> = new mongoose.Schema({
     id: String,
     symbol: String,
     name: String
+  }],
+  posts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post"
   }]
 })
 

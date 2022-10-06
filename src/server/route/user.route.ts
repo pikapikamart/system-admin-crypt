@@ -2,9 +2,9 @@ import {
   coinWatchlistHandler,
   signupUserHandler, 
   validateUserHandler } from "../controllers/user.controller";
-import { isValidUser } from "../middlewares/user.route.middleware";
+import { isValidUser } from "../middlewares/route.middleware";
 import { createRouter } from "../router/createRouter";
-import { cryptoSymbolSchema } from "../schemas/crypto.schema";
+import { coinSchema } from "../schemas/coin.schema";
 import { 
   loginUserSchema, 
   userSchema } from "../schemas/user.schema";
@@ -22,6 +22,6 @@ export const userRouter = createRouter()
   // requires authentication
   .middleware(({ ctx, next }) => isValidUser(ctx, next))
   .mutation("watchlist", {
-    input: cryptoSymbolSchema,
+    input: coinSchema,
     resolve: ({ ctx, input }) => coinWatchlistHandler(ctx, input)
   })

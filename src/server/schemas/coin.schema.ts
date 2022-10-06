@@ -1,7 +1,7 @@
 import z, { TypeOf } from "zod"
 
 
-export const cryptoSymbolSchema = z
+export const coinSchema = z
   .object({
     id: z
       .string({ required_error: "Id is required" })
@@ -14,4 +14,4 @@ export const cryptoSymbolSchema = z
       .min(1, "Name should not be empty")
   })
 
-export type CryptoSymbolSchema = TypeOf<typeof cryptoSymbolSchema>
+export type CoinSchema = TypeOf<typeof coinSchema>

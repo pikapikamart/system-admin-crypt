@@ -8,7 +8,7 @@ export type Post = {
   postId: string,
   owner: UserDocument["_id"],
   content: string,
-  tags: Coin[]
+  tags?: Coin[]
 }
 
 export type PostDocument = Post & mongoose.Document & {
@@ -31,7 +31,11 @@ const postSchema: mongoose.Schema<PostDocument> = new mongoose.Schema({
     type: String,
     required: true
   },
-  tags: [String]
+  tags: [{
+    id: String,
+    symbol: String,
+    name: String
+  }]
 },{ timestamps: true })
 
 const postModel: mongoose.Model<PostDocument> = mongoose.models.Post || mongoose.model<PostDocument>("Post", postSchema)
