@@ -11,7 +11,7 @@ type TrpcNext = {
 };
 
 export const isValidUser = async( ctx: Context, next: TrpcNext ) => {
-  
+ 
   if ( !ctx.token ) {
     return trpcError("UNAUTHORIZED", "Login first")
   }

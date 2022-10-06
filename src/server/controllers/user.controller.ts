@@ -38,13 +38,13 @@ export const validateUserHandler = async( loginBody: LoginUserSchema ) => {
 }
 
 export const coinWatchlistHandler = async( { user }: UserContext, coin: CryptoSymbolSchema ) => {
-  
-  if ( user.watchlist?.find(token => token===coin.symbol) ) {
+
+  if ( user.watchlist?.find(token => token.id===coin.id) ) {
     await updateUser(
       { email: user.email },
       {
         $pull: {
-          watchlist: coin.symbol
+          watchlist: coin
         }
       }
     )
@@ -56,7 +56,7 @@ export const coinWatchlistHandler = async( { user }: UserContext, coin: CryptoSy
     { email: user.email },
     {
       $push: {
-        watchlist: coin.symbol
+        watchlist: coin
       }
     }
   )

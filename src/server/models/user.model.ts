@@ -2,14 +2,19 @@ import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 
 
-// add id
+export type Coin = {
+  id: string,
+  symbol: string,
+  name: string
+}
+
 export type User = {
   userId: string,
   fullname: string,
   username: string,
   email: string,
   password: string,
-  watchlist?: string[]
+  watchlist?: Coin[]
 }
 
 export type UserDocument = User & mongoose.Document & {
@@ -39,7 +44,11 @@ const userSchema: mongoose.Schema<UserDocument> = new mongoose.Schema({
     type: String,
     required: true
   },
-  watchlist: [String]
+  watchlist: [{
+    id: String,
+    symbol: String,
+    name: String
+  }]
 })
 
 userSchema.pre("save", async function( next ){
