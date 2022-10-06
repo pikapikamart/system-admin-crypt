@@ -21,3 +21,7 @@ export const updatePostService = async(
 export const findPostService = ( post: FilterQuery<Post> ) => (
   postModel.findOne(post)
 )
+
+export const deletePostService = ( post: FilterQuery<Post> ) => (
+  postModel.findOneAndDelete(post)
+)

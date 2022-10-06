@@ -20,5 +20,13 @@ export const replyPostSchema = z
       .min(1, "Content should not be empty"),
   })
 
+export const postIdSchema = z
+  .object({
+    postId: z
+      .string({ required_error: "Post Id is required" })
+      .min(1, "Post Id should not be empty")
+  })
+
 export type PostSchema = TypeOf<typeof postSchema>
 export type ReplyPostSchema = TypeOf<typeof replyPostSchema>
+export type PostIdSchema = TypeOf<typeof postIdSchema>
