@@ -1,5 +1,24 @@
 
 
+export type Coin = {
+  "id": string,
+  "symbol": string,
+  "name": string,
+  "image": string,
+  "current_price": number,
+  "market_cap": number,
+  "market_cap_rank": number,
+  "fully_diluted_valuation": number,
+  "total_volume": number,
+  "circulating_supply": number,
+  "total_supply": number,
+  "max_supply": number,
+  "price_change_1hr": number,
+  "price_change_24hr": number,
+  "price_change_7d": number,
+  description: string
+}
+
 export const coins = [
   {
     "id": "bitcoin",
