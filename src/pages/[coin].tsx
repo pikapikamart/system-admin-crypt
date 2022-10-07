@@ -1,16 +1,19 @@
+import { Coin } from "@/components/coin";
 import { 
   GetStaticPaths, 
   GetStaticPropsContext, 
   InferGetStaticPropsType, 
   NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { Coin, coins } from "../server/json/coin.json";
+import { 
+  Coin as CoinType, 
+  coins } from "../server/json/coin.json";
 
 
 const CoinPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ( { coin } ) => {
-
+ 
   return (
-    <main></main>
+    <Coin coin={ coin } />
   )
 }
 
@@ -50,7 +53,7 @@ export const getStaticProps = async( context: GetStaticPropsContext ) => {
 
   return {
     props: {
-      coin: JSON.parse(JSON.stringify(coin)) as Coin
+      coin: JSON.parse(JSON.stringify(singleCoin)) as CoinType
     }
   }
 }
