@@ -1,7 +1,10 @@
+import { UserSchema } from "@/src/server/schemas/user.schema"
+import { signIn } from "next-auth/react"
 import { 
   useRef, 
   useState,
   useEffect } from "react"
+import { trpc } from "./trpc"
 import { 
   addErrors, 
   inputHasError, 
@@ -92,8 +95,7 @@ export const useFormValidation = () => {
 
     if ( formHasError ) {
       configureLiveRegion(true)
-      setIsValidData(false)
-      setIsSubmitting(false)
+      resetFormValidation()
     } else {
       setIsValidData(true)
     }
@@ -112,5 +114,47 @@ export const useFormValidation = () => {
     getFieldsRef,
     handleFormSubmit,
     resetFormValidation
+  }
+}
+
+type SignupData = UserSchema & {
+  [ key: string ]: string
+}
+
+export const useSignup = () => {
+  const {
+    isValidData,
+    addFieldRef,
+    handleFormSubmit,
+    getFieldsRef
+  } = useFormValidation()
+  const mutation = trpc.useMutation(["user.signup"])
+  const signupDataRef = useRef<SignupData | null>(null)
+
+  useEffect(() =>{
+    if ( isValidData ) {
+      const fieldDatas = getFieldsRef().reduce((accu, curr) => {
+        accu[curr.name] = curr.value
+
+        return accu
+      }, {} as SignupData)
+
+      signupDataRef.current = fieldDatas
+      mutation.mutate(fieldDatas)
+    }
+  }, [ isValidData ])
+
+  useEffect(() =>{
+    if ( mutation.isSuccess && signupDataRef.current ) {
+      signIn("credentials", {
+        ...signupDataRef.current,
+        callbackUrl: "/"
+      })
+    }
+  }, [ mutation ])
+
+  return {
+    addFieldRef,
+    handleFormSubmit
   }
 }

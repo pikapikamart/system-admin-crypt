@@ -1,5 +1,6 @@
 import { InputField } from "@/components/collections/input"
-import { useFormValidation } from "@/lib/hooks"
+import { useSignup } from "@/lib/hooks"
+import { trpc } from "@/lib/trpc"
 import { 
   SignupFormWrapper, 
   SignupOption, 
@@ -12,10 +13,9 @@ type SignupProps = {
 
 const Signup = ( { exit }: SignupProps ) => {
   const {
-    isValidData,
     addFieldRef,
     handleFormSubmit
-  } = useFormValidation()
+  } = useSignup()
 
   return (
     <SignupFormWrapper 

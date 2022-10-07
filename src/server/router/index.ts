@@ -18,4 +18,5 @@ export const appRouter =
   .merge("post.", postRouter)
   .merge("coin.", coinRouter)
 
-export type Approuter = typeof appRouter
+  
+export type AppRouter = typeof appRouter
