@@ -1,4 +1,6 @@
-import { useEffect, useRef } from "react"
+import { 
+  useEffect, 
+  useRef } from "react"
 import { 
   BaseModalWrapper, 
   ModalExit } from "./modal.styled"

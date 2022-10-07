@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components"
 import { rem } from "@/styled/functions"
 import { ColumCenterCenter } from "@/styled/shared/helpers"
-import { InputContainer } from "../../input/input.styled"
+import { InputContainer } from "@/components/collections/input/input.styled"
 
 
-export const SignupForm = styled(ColumCenterCenter)`
+export const SignupFormWrapper = styled(ColumCenterCenter)`
 
   ${ InputContainer } {
-    
+
     &:not(:last-of-type) {
-      margin-bottom: ${ rem(24) };
+      margin-bottom: ${ rem(24) }
     }
   }
 `

@@ -31,4 +31,4 @@ const Input = ( { labelText, name, addFieldRef, type }: InputProps ) =>{
 }
 
 
-export default Input;
+export default Input

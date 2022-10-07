@@ -1,5 +1,5 @@
-import { ParentModal } from "@/components/shared/modal";
-import { SignupModal } from "@/components/shared/modal/signup";
+import { ParentModal } from "@/components/collections/modal";
+import { SignupModal } from "@/components/collections/modal/signup";
 import { 
   BlockLink, 
   SrOnly } from "@/styled/shared/helpers";

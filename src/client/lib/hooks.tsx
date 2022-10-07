@@ -1,8 +1,14 @@
-import { useRef, useState } from "react"
-import { addErrors, inputHasError, removeErrors } from "./utils"
+import { 
+  useRef, 
+  useState,
+  useEffect } from "react"
+import { 
+  addErrors, 
+  inputHasError, 
+  removeErrors } from "./utils"
 
 
-const useExpansion = () =>{
+export const useExpansion = () =>{
   const [ isExpanded, setIsExpanded ] = useState(false)
 
   const handleExpansion = () =>{
@@ -12,6 +18,22 @@ const useExpansion = () =>{
   return {
     isExpanded,
     handleExpansion
+  }
+}
+
+interface AnyFocusableELement extends HTMLElement{}
+
+export const useFocusRef = () =>{
+  const elementRef = useRef<AnyFocusableELement | null>(null)
+
+  useEffect(() =>{ 
+    if ( elementRef.current ) {
+      elementRef.current.focus()
+    }
+  }, [])
+
+  return {
+    elementRef
   }
 }
 

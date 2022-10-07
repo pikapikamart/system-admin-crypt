@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import { rem } from "@/styled/functions"
-import { ColumCenterCenter, RowCenter } from "@/styled/shared/helpers"
+import { 
+  ColumCenterCenter, 
+  RowCenter } from "@/styled/shared/helpers"
 
 
 export const InputContainer = styled(ColumCenterCenter)`
