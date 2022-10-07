@@ -25,7 +25,7 @@ const Navlinks = () =>{
 
   const renderLinks = () =>{
     const links = currentLinks.map(link => 
-      <NavlinksItem>
+      <NavlinksItem key={ link.name }>
         <Link
           href={ "/" + link.path }
           passHref>

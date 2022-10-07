@@ -44,7 +44,7 @@ export const Navlink = styled.a`
         content: "";
         background-color: ${ colors.darkBlue };
         height: ${ rem(3) };
-        inset: auto auto -${ rem(6) } 50%;
+        inset: auto auto -${ rem(12) } 50%;
         position: absolute;
         transform: translate(-50%, 0);
         width: ${ rem(56) };
