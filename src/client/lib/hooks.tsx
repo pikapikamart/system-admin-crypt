@@ -168,13 +168,14 @@ export const useLogin = () => {
     isValidData,
     addFieldRef,
     handleFormSubmit,
-    getFieldsRef
+    getFieldsRef,
+    resetFormValidation
   } = useFormValidation()
   const [ loginData, setLoginData ] = useState<LoginData>({
     email: "",
     password: ""
   })
-  const { data, refetch } = trpc.useQuery(["user.validate", loginData], {
+  const query = trpc.useQuery(["user.validate", loginData], {
     refetchOnWindowFocus: false,
     enabled: false
   })
@@ -193,18 +194,20 @@ export const useLogin = () => {
 
   useEffect(() =>{
     if ( loginData.email && loginData.password ) {
-      refetch()
+      query.refetch()
     }
   }, [ loginData ])
 
   useEffect(() =>{
-    if ( data?.success ) {
+    if ( query.isSuccess ) {
       signIn("credentials", {
         ...loginData,
         callbackUrl: "/"
       })
+    } else if ( query.isError ) {
+      resetFormValidation()
     }
-  }, [ data ])
+  }, [ query ])
 
   return {
     addFieldRef,
