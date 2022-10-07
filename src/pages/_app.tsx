@@ -5,17 +5,20 @@ import { ThemeProvider } from 'styled-components'
 import { withTRPC } from "@trpc/next"
 import { AppRouter } from '../server/router'
 import superjson from "superjson"
+import { SessionProvider } from 'next-auth/react'
 
 
 
 function MyApp({ Component, pageProps }: AppProps) {
 
   return(
-    <ThemeProvider theme={ Theme }>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ThemeProvider>
+    <SessionProvider session={ pageProps.session }>
+      <ThemeProvider theme={ Theme }>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
+    </SessionProvider>
   )
 }
 

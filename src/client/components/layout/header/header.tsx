@@ -4,6 +4,9 @@ import { SignupModal } from "@/components/collections/modal/signup";
 import { 
   BlockLink, 
   SrOnly } from "@/styled/shared/helpers";
+import { 
+  signOut, 
+  useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { 
@@ -17,6 +20,7 @@ import { HeaderNavlinks } from "./navlinks";
 const Header = () =>{
   const [ loginExpanded, setLoginExpanded ] = useState(false)
   const [ signupExpanded, setSignupExpanded ] = useState(false)
+  const { data } = useSession()
 
   const removeModal = () => {
     setLoginExpanded(false)
@@ -40,22 +44,36 @@ const Header = () =>{
         </div>
         <HeaderNavlinks />
         <HeaderOptions as="ul">
-          <HeaderOptionsItem>
-            <HeaderOption 
-              colored={ false }
-              onClick={ () => setLoginExpanded(prev => !prev) }
-              aria-expanded={ loginExpanded }>
-                Log in
-            </HeaderOption>
-          </HeaderOptionsItem>
-          <HeaderOptionsItem>
-            <HeaderOption 
-              colored={ true }
-              onClick={ () => setSignupExpanded(prev => !prev) }
-              aria-expanded={ signupExpanded }>
-              Sign up
-            </HeaderOption>
-          </HeaderOptionsItem>
+          { data && (
+            <HeaderOptionsItem>
+              <HeaderOption 
+                colored={ false }
+                onClick={ () => signOut({ callbackUrl: "/" }) }
+                aria-expanded={ loginExpanded }>
+                  Log out
+              </HeaderOption>
+            </HeaderOptionsItem>
+          ) }
+          { !data && (
+            <>
+              <HeaderOptionsItem>
+                <HeaderOption 
+                  colored={ false }
+                  onClick={ () => setLoginExpanded(prev => !prev) }
+                  aria-expanded={ loginExpanded }>
+                    Log in
+                </HeaderOption>
+              </HeaderOptionsItem>
+              <HeaderOptionsItem>
+                <HeaderOption 
+                  colored={ true }
+                  onClick={ () => setSignupExpanded(prev => !prev) }
+                  aria-expanded={ signupExpanded }>
+                  Sign up
+                </HeaderOption>
+              </HeaderOptionsItem>
+            </>
+          ) }
         </HeaderOptions>
       </HeaderWrapper>
       { (loginExpanded || signupExpanded) && (

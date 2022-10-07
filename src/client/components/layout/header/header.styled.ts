@@ -18,6 +18,7 @@ export const HeaderWrapper = styled(RowCenterBetween)`
 
 export const HeaderNavbar = styled.nav`
   font-weight: 600;
+  padding-top: ${ rem(12) };
 `
 
 export const HeaderNavlinks = styled(RowCenter)`
