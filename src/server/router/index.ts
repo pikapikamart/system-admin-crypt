@@ -1,5 +1,6 @@
 import superjson from "superjson"
 import { connectDatabase } from "../database"
+import { coinRouter } from "../route/coin.route"
 import { postRouter } from "../route/post.route"
 import { userRouter } from "../route/user.route"
 import { createRouter } from "./createRouter"
@@ -15,5 +16,6 @@ export const appRouter =
   })
   .merge("user.", userRouter)
   .merge("post.", postRouter)
+  .merge("coin.", coinRouter)
 
 export type Approuter = typeof appRouter
