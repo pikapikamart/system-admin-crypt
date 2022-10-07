@@ -14,9 +14,7 @@ const Layout = ( { children }: LayoutProps ) =>{
       <HTMLHead />
       <GlobalStyle />
       <LayoutHeader />
-      <main>
-        { children }
-      </main>
+      { children }
     </>
   )
 }
