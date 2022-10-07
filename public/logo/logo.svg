@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="166" height="40" viewBox="0 0 166 40">
+  <g id="Logo" transform="translate(-78 -26)">
+    <g id="Icon">
+      <g id="Group_3" data-name="Group 3" transform="translate(99.832 55.331)">
+        <rect id="Rectangle_1" data-name="Rectangle 1" width="11" height="11" rx="2" transform="translate(0.168 -0.331)" fill="#1d505d"/>
+        <rect id="Rectangle_5" data-name="Rectangle 5" width="4" height="4" rx="1" transform="translate(3.668 3.169)" fill="#fff"/>
+      </g>
+      <g id="Group_1" data-name="Group 1" transform="translate(78 33.5)">
+        <rect id="Rectangle_1-2" data-name="Rectangle 1" width="11" height="11" rx="2" transform="translate(0 -0.5)" fill="#1d505d"/>
+        <rect id="Rectangle_12" data-name="Rectangle 12" width="4" height="4" rx="1" transform="translate(3.5 3)" fill="#fff"/>
+      </g>
+      <rect id="Rectangle_9" data-name="Rectangle 9" width="1.5" height="11.278" transform="translate(95.7 51.767) rotate(-45)" fill="#fff"/>
+      <rect id="Rectangle_1-3" data-name="Rectangle 1" width="16" height="16" rx="2" transform="translate(102 26)" fill="#4c8394"/>
+      <g id="Group_2" data-name="Group 2" transform="translate(78 55.331)">
+        <rect id="Rectangle_1-4" data-name="Rectangle 1" width="11" height="11" rx="2" transform="translate(0 -0.331)" fill="#1d505d"/>
+        <rect id="Rectangle_14" data-name="Rectangle 14" width="4" height="4" rx="1" transform="translate(3.5 3.169)" fill="#fff"/>
+      </g>
+      <rect id="Rectangle_8" data-name="Rectangle 8" width="1.5" height="11.278" transform="translate(85.361 59.742) rotate(-135)" fill="#fff"/>
+      <rect id="Rectangle_1-5" data-name="Rectangle 1" width="11" height="11" rx="2" transform="translate(89 44)" fill="#4c8394"/>
+      <rect id="Rectangle_7" data-name="Rectangle 7" width="1.5" height="12.857" transform="translate(84.348 40.283) rotate(-45)" fill="#fff"/>
+      <rect id="Rectangle_10" data-name="Rectangle 10" width="1.975" height="18.561" transform="translate(96.029 49.375) rotate(-135)" fill="#fff"/>
+      <rect id="Rectangle_11" data-name="Rectangle 11" width="1.58" height="18.561" transform="translate(95.75 48.564) rotate(-135)" fill="#4c8394"/>
+      <rect id="Rectangle_15" data-name="Rectangle 15" width="4" height="4" rx="1" transform="translate(92.5 47.5)" fill="#fff"/>
+      <rect id="Rectangle_13" data-name="Rectangle 13" width="6" height="6" rx="1" transform="translate(107 31)" fill="#fff"/>
+    </g>
+    <text id="CoinSpot" transform="translate(124 59)" fill="#1d505d" font-size="28" font-family="Raleway-Bold, Raleway" font-weight="700" letter-spacing="-0.016em"><tspan x="0" y="0">CoinSpot</tspan></text>
+  </g>
+</svg>
