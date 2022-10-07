@@ -1,5 +1,6 @@
 import { coins } from "../json/coin.json"
-import { trpcSuccess } from "./utils.controller"
+import { CoinIdSchema } from "../schemas/coin.schema"
+import { trpcError, trpcSuccess } from "./utils.controller"
 
 
 export const getAllCoinsHandler = async() => {
@@ -10,4 +11,14 @@ export const getAllCoinsHandler = async() => {
   })
 
   return trpcSuccess(true, filteredCoins)
+}
+
+export const getCoinHandler = async( { id }: CoinIdSchema ) => {
+  const foundCoin = coins.find(coin => coin.id===id)
+
+  if ( !foundCoin ) {
+    return trpcError("NOT_FOUND", "No coin found with this id")
+  }
+
+  return trpcSuccess(true, foundCoin)
 }

@@ -14,4 +14,12 @@ export const coinSchema = z
       .min(1, "Name should not be empty")
   })
 
+export const coinIdSchema = z
+  .object({
+    id: z
+    .string({ required_error: "Id is required" })
+    .min(1, "Id should not be empty"),
+  })
+
+export type CoinIdSchema = TypeOf<typeof coinIdSchema>
 export type CoinSchema = TypeOf<typeof coinSchema>
