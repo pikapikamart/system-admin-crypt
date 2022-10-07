@@ -1,35 +1,27 @@
-import { InputField } from "@/components/collections/input"
-import { useSignup } from "@/lib/hooks"
-import { FormOption, FormOptions } from "../form.styled"
-import { SignupFormWrapper } from "./signup.styled"
+import { useLogin } from "@/lib/hooks"
+import { InputField } from "../../input"
+import { 
+  FormOptions,
+  FormOption } from "../form.styled"
+import { LoginFormWrapper } from "./login.styled"
 
 
-type SignupProps = {
+type LoginProps = {
   exit: () => void
 }
 
-const Signup = ( { exit }: SignupProps ) => {
+const Login = ( { exit }: LoginProps ) =>{
   const {
     addFieldRef,
     handleFormSubmit
-  } = useSignup()
+  } = useLogin()
 
   return (
-    <SignupFormWrapper 
+    <LoginFormWrapper
       as="form"
       noValidate
       onSubmit={ handleFormSubmit }>
         <div>
-          <InputField
-            labelText="Fullname"
-            name="fullname"
-            type="text"
-            addFieldRef={ addFieldRef } />
-            <InputField
-            labelText="Username"
-            name="username"
-            type="text"
-            addFieldRef={ addFieldRef } />
             <InputField
             labelText="Email"
             name="email"
@@ -44,16 +36,16 @@ const Signup = ( { exit }: SignupProps ) => {
         <FormOptions>
           <FormOption
             colored="darkBlue"
-            type="submit">Sign up
+            type="submit">Login
           </FormOption>
           <FormOption 
             type="button"
             onClick={ exit }>Close
           </FormOption>
         </FormOptions>
-    </SignupFormWrapper>
+    </LoginFormWrapper>
   )
 }
 
 
-export default Signup
+export default Login

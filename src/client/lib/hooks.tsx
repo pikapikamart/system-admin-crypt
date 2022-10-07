@@ -1,4 +1,4 @@
-import { UserSchema } from "@/src/server/schemas/user.schema"
+import { LoginUserSchema, UserSchema } from "@/src/server/schemas/user.schema"
 import { signIn } from "next-auth/react"
 import { 
   useRef, 
@@ -152,6 +152,59 @@ export const useSignup = () => {
       })
     }
   }, [ mutation ])
+
+  return {
+    addFieldRef,
+    handleFormSubmit
+  }
+}
+
+type LoginData = LoginUserSchema & {
+  [ key: string ]: string
+}
+
+export const useLogin = () => {
+  const {
+    isValidData,
+    addFieldRef,
+    handleFormSubmit,
+    getFieldsRef
+  } = useFormValidation()
+  const [ loginData, setLoginData ] = useState<LoginData>({
+    email: "",
+    password: ""
+  })
+  const { data, refetch } = trpc.useQuery(["user.validate", loginData], {
+    refetchOnWindowFocus: false,
+    enabled: false
+  })
+
+  useEffect(() =>{
+    if ( isValidData ) {
+      const fieldDatas = getFieldsRef().reduce((accu, curr) => {
+        accu[curr.name] = curr.value
+
+        return accu
+      }, {} as LoginData)
+
+      setLoginData(fieldDatas)
+    }
+  }, [ isValidData ])
+
+  useEffect(() =>{
+    if ( loginData.email && loginData.password ) {
+      refetch()
+    }
+  }, [ loginData ])
+
+  useEffect(() =>{
+    if ( data?.success ) {
+      signIn("credentials", {
+        ...loginData,
+        callbackUrl: "/"
+      })
+    }
+  }, [ data ])
 
   return {
     addFieldRef,

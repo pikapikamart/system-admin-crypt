@@ -1,4 +1,5 @@
 import { ParentModal } from "@/components/collections/modal";
+import { LoginModal } from "@/components/collections/modal/login";
 import { SignupModal } from "@/components/collections/modal/signup";
 import { 
   BlockLink, 
@@ -60,6 +61,7 @@ const Header = () =>{
       { (loginExpanded || signupExpanded) && (
         <ParentModal exit={ removeModal }>
           { signupExpanded && <SignupModal exit={ removeModal } /> }
+          { loginExpanded && <LoginModal exit={ removeModal } /> }
         </ParentModal>
       ) }
     </>
