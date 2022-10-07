@@ -6,22 +6,25 @@ import { withTRPC } from "@trpc/next"
 import { AppRouter } from '../server/router'
 import superjson from "superjson"
 import { SessionProvider } from 'next-auth/react'
+import { store } from "../client/store"
+import { Provider } from 'react-redux'
 
 
 
 function MyApp({ Component, pageProps }: AppProps) {
 
   return(
-    <SessionProvider session={ pageProps.session }>
-      <ThemeProvider theme={ Theme }>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
-    </SessionProvider>
+    <Provider store={ store }>
+      <SessionProvider session={ pageProps.session }>
+        <ThemeProvider theme={ Theme }>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
+      </SessionProvider>
+    </Provider>
   )
 }
-
 
 const trpc = withTRPC<AppRouter>({
   config({ ctx }) {
