@@ -1,5 +1,6 @@
 import { 
   coinWatchlistHandler,
+  getProfileHandler,
   signupUserHandler, 
   updateProfileHandler, 
   validateUserHandler } from "../controllers/user.controller";
@@ -23,6 +24,9 @@ export const userRouter = createRouter()
   })
   // requires authentication
   .middleware(({ ctx, next }) => isValidUser(ctx, next))
+  .query("get-profile", {
+    resolve: ({ ctx }) => getProfileHandler(ctx)
+  })
   .mutation("watchlist", {
     input: coinSchema,
     resolve: ({ ctx, input }) => coinWatchlistHandler(ctx, input)

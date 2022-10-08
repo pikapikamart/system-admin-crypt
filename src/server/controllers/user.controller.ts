@@ -1,16 +1,69 @@
 import { UserContext } from "../middlewares/route.middleware";
 import { CoinSchema } from "../schemas/coin.schema";
-import { LoginUserSchema, UpdateUserSchema, UserSchema } from "../schemas/user.schema";
+import { 
+  LoginUserSchema, 
+  UpdateUserSchema, 
+  UserSchema } from "../schemas/user.schema";
+import { findAllPostAggregator } from "../services/post.service";
 import { 
   createUserService, 
   findUserService, 
-  updateUserService} from "../services/user.service";
+  updateUserService } from "../services/user.service";
 import { 
   customNanoid,
   loginValidator,
   trpcError, 
   trpcSuccess } from "./utils.controller";
 
+
+// --------Queries--------
+
+export const validateUserHandler = async( loginBody: LoginUserSchema ) => {
+  const user = loginValidator(await findUserService({ email: loginBody.email }))
+
+  if ( !await user.comparePassword(loginBody.password) ) {
+    return trpcError("CONFLICT", "Password does not match")
+  }
+
+  return trpcSuccess(true, "Account validated")
+}
+
+export const getProfileHandler = async( { user }: UserContext ) => {
+
+  const posts = await findAllPostAggregator([
+    {
+      $match: {
+        "owner.email": user.email.split("@")[0],
+      }
+    },
+    {
+      $set: {
+        repliesCount: {
+          $size: "$replies"
+        }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        replies: 0,
+      }
+    }
+  ])
+
+  const {
+    email,
+    password,
+    _id,
+    ...restUser
+  } = user
+
+  restUser.posts = posts
+
+  return trpcSuccess(true, restUser)
+}
+
+// --------Queries--------
 
 export const signupUserHandler = async( signupBody: UserSchema ) => {
   const foundUser = await findUserService({ email: signupBody.email })
@@ -25,16 +78,6 @@ export const signupUserHandler = async( signupBody: UserSchema ) => {
   })
 
   return trpcSuccess(true, "Account has been created")
-}
-
-export const validateUserHandler = async( loginBody: LoginUserSchema ) => {
-  const user = loginValidator(await findUserService({ email: loginBody.email }))
-
-  if ( !await user.comparePassword(loginBody.password) ) {
-    return trpcError("CONFLICT", "Password does not match")
-  }
-
-  return trpcSuccess(true, "Account validated")
 }
 
 export const coinWatchlistHandler = async( { user }: UserContext, coin: CoinSchema ) => {

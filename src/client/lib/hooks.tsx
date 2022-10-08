@@ -1,9 +1,11 @@
 import { LoginUserSchema, UserSchema } from "@/src/server/schemas/user.schema"
-import { signIn } from "next-auth/react"
+import { selectUser } from "@/store/slices/user.slice"
+import { signIn, useSession } from "next-auth/react"
 import { 
   useRef, 
   useState,
   useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "./store.hooks"
 import { trpc } from "./trpc"
 import { 
   addErrors, 
@@ -260,5 +262,21 @@ export const useTablistSelection = () => {
     addTabRef,
     handleChangeTabFocus,
     handleChangeCurrentTabindex
+  }
+}
+
+export const useSetupUser = () =>{
+  const { data: session } = useSession()
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(selectUser)
+  
+  useEffect(() =>{
+    if ( session?.user && !user.userId ) {
+      
+    }
+  }, [ session ])
+
+  return {
+    user
   }
 }

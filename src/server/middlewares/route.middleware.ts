@@ -16,7 +16,11 @@ export const isValidUser = async( ctx: Context, next: TrpcNext ) => {
     return trpcError("UNAUTHORIZED", "Login first")
   }
 
-  const user = loginValidator(await findUserService({ email: ctx.token.email }))
+  const user = loginValidator(await findUserService(
+    { email: ctx.token.email },
+    "",
+    { lean: true }
+  ))
 
   return next({
     ctx: {
