@@ -22,3 +22,13 @@ export const getCoinHandler = async( { id }: CoinIdSchema ) => {
 
   return trpcSuccess(true, foundCoin)
 }
+
+export const getCoinsNamesHandler = async() =>{
+  const filteredCoins = coins.map(coin => {
+    const { id, name, symbol } = coin
+
+    return { id, name, symbol }
+  })
+
+  return trpcSuccess(true, filteredCoins)
+}
