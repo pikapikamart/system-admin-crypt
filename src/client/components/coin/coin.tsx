@@ -1,4 +1,7 @@
+import { useCoinWatchlist, useSetupUser } from "@/lib/hooks"
+import { useAppDispatch } from "@/lib/store.hooks"
 import { Coin as CoinType } from "@/src/server/json/coin.json"
+import { toggleWatchlist } from "@/store/slices/user.slice"
 import { SrOnly } from "@/styled/shared/helpers"
 import { useSession } from "next-auth/react"
 import { BreadCrumbs } from "./breadcrumbs"
@@ -27,7 +30,11 @@ type CoinProps = {
 }
 
 const Coin = ({ coin }: CoinProps) => {
-  const { data } = useSession()
+  const {
+    coinWatchlist,
+    handleCoinWatchlist
+  } = useCoinWatchlist(coin)
+  const { user } = useSetupUser()
 
   if ( !coin ) {
     return <></>
@@ -59,8 +66,12 @@ const Coin = ({ coin }: CoinProps) => {
               <span>{ Math.round(coin.price_change_24hr * 10)/10 }%</span>
             </CoinPrice>
           </CoinHeader>
-          { data?.user && (
-            <CoinWatchlistButton colored="darkBlue">Add to watchlist</CoinWatchlistButton>
+          { user.userId && (
+            <CoinWatchlistButton 
+              colored="darkBlue"
+              onClick={ handleCoinWatchlist }>
+              { coinWatchlist?.find(token => token.id===coin.id)? "Remove from watchlist" : "Add to watchlist" }
+            </CoinWatchlistButton>
           ) }
           <CoinMarketDataWrapper>
             <CoinTopic>Market Data</CoinTopic>

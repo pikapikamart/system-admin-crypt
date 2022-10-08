@@ -1,5 +1,6 @@
+import { Coin } from "@/src/server/models/user.model"
 import { LoginUserSchema, UserSchema } from "@/src/server/schemas/user.schema"
-import { selectUser } from "@/store/slices/user.slice"
+import { selectCoinWatchlist, selectUser, setUser, toggleWatchlist } from "@/store/slices/user.slice"
 import { signIn, useSession } from "next-auth/react"
 import { 
   useRef, 
@@ -269,14 +270,46 @@ export const useSetupUser = () =>{
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
   const user = useAppSelector(selectUser)
+  const query = trpc.useQuery(["user.get-profile"], {
+    refetchOnWindowFocus: false,
+    enabled: false
+  })
   
   useEffect(() =>{
     if ( session?.user && !user.userId ) {
-      
+      query.refetch()
     }
   }, [ session ])
 
+  useEffect(() =>{
+    if ( query.isSuccess && !user.userId ) {
+      dispatch(setUser(JSON.parse(JSON.stringify(query.data.data))))
+    }
+  }, [ query ])
+
   return {
     user
+  }
+}
+
+export const useCoinWatchlist = ( coin: Coin ) =>{
+  const mutation = trpc.useMutation(["user.watchlist"])
+  const dispatch = useAppDispatch()
+  const coinWatchlist = useAppSelector(selectCoinWatchlist)
+
+  const handleCoinWatchlist = () => {
+    mutation.mutate(coin)
+  }
+
+  useEffect(() =>{
+    if ( mutation.isSuccess ) {
+      
+      dispatch(toggleWatchlist(coin))
+    }
+  }, [ mutation.isSuccess ])
+  
+  return {
+    coinWatchlist,
+    handleCoinWatchlist
   }
 }

@@ -1,7 +1,9 @@
 import { 
   createSlice,
   PayloadAction } from "@reduxjs/toolkit"
-import { User } from "@/src/server/models/user.model"
+import { 
+  Coin, 
+  User } from "@/src/server/models/user.model"
 import { Post } from "@/src/server/models/post.model"
 import { RootState } from ".."
 
@@ -22,14 +24,24 @@ export const userSlice = createSlice({
   reducers: {
     setUser: ( state, action: PayloadAction<UserState> ) =>{
       state = action.payload
+
+      return state
+    },
+    toggleWatchlist: ( state, action: PayloadAction<Coin> ) =>{
+      if ( state.watchlist?.find(coin => coin.id===action.payload.id) ) {
+        state.watchlist = state.watchlist.filter(coin => coin.id!==action.payload.id)
+      } else {
+        state.watchlist = state.watchlist?.concat([action.payload])
+      }
     }
   }
 })
 
 export const {
-  setUser
+  setUser,
+  toggleWatchlist
 } = userSlice.actions
 export const selectUser = ( state: RootState ) => state.user
-
+export const selectCoinWatchlist = ( state: RootState ) => state.user.watchlist
 
 export default userSlice.reducer
