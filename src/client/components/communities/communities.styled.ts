@@ -98,6 +98,7 @@ export const FeedsItemContent = styled.p`
   font-size: ${ rem(15) };
   font-weight: 500;
   margin: ${ rem(12) } 0;
+  white-space: pre-wrap;
 `
 
 export const FeedsItemTagsList = styled(RowCenter)`

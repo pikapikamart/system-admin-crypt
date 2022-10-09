@@ -17,7 +17,7 @@ export type PostCreation = Post & {
 const CommunitiesPage: NextPage<InferGetServerSidePropsType<GetServerSideProps>> = ({ posts }) => {
   
   return (
-    <Communities posts={ posts } />
+    <Communities posts={ posts?.reverse() } />
   )
 }
 

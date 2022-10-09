@@ -153,7 +153,11 @@ export const PostTagButton = styled.button`
   ` }
 `
 
-export const PostTagSubmit = styled.button`
+type PostTagSubmitProps = {
+  available: boolean
+}
+
+export const PostTagSubmit = styled.button<PostTagSubmitProps>`
   align-self: start;
   border-radius: ${ rem(8) };
   font-size: ${ rem(17) };
@@ -162,8 +166,12 @@ export const PostTagSubmit = styled.button`
   grid-row: 3 / 4;
   padding: ${ rem(12) } 0;
 
-  ${ ({ theme: { colors } }) => `
-    background-color: ${ colors.blue };
+  ${ ({ available, theme: { colors } }) => `
+    background-color: ${ available? colors.blue : colors.grey3 };
     color: ${ colors.white1 };
+
+    &:hover {
+      cursor: ${ available? "pointer" : "not-allowed" };
+    }
   ` }
 `

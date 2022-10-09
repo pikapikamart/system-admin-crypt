@@ -63,7 +63,7 @@ const Communities = ({ posts }: CommunitiesProps) =>{
                   </FeedsItemUser>
                   <FeedsItemDate>
                     { formatDate(post.createdAt) }
-                    { compareDate(post.createdAt, post.updatedAt)? " (edited)" : "" }
+                    { compareDate(post.createdAt, post.updatedAt)? "" : " (edited)" }
                   </FeedsItemDate>
                 </FeedsItemHeader>
                 <FeedsItemContent>

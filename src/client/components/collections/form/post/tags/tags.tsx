@@ -1,6 +1,9 @@
 import { Coin } from "@/src/server/models/user.model"
 import { SrOnly } from "@/styled/shared/helpers"
-import { useRef, useState } from "react"
+import { 
+  useEffect, 
+  useRef, 
+  useState } from "react"
 import { 
   PostTagButton,
   PostTagContainer, 
@@ -13,20 +16,17 @@ import {
 
 
 type TagsProps = {
+  addCoinTag: ( coin:Coin ) => void,
+  removeCoinTag: ( coin:Coin ) => void
   coins: Coin[],
-  selectedCoins: Coin[]
+  selectedTags: Coin[]
 }
 
-const Tags = ({ coins, selectedCoins }: TagsProps) =>{
+const Tags = ({ addCoinTag, removeCoinTag ,coins, selectedTags }: TagsProps) =>{
   const [ isExpanded, setIsExpanded ] = useState(false)
   const [ coinTags, setCoinTags ] = useState<Coin[]>(coins?? [])
   const [ tablistIndex, setTablistIndex ] = useState(0)
-  const [ selectedTags, setSelectedTags ] = useState<Coin[]>(selectedCoins?? [])
   const inputRef = useRef<HTMLInputElement | null>(null)
-
-  const addCoinTag = ( coin: Coin ) => {
-    setSelectedTags(prev => prev.concat([coin]))
-  }
 
   const handleOnkeyUp = ( event: React.KeyboardEvent<HTMLInputElement> ) => {
     const { key } = event
@@ -142,9 +142,7 @@ const Tags = ({ coins, selectedCoins }: TagsProps) =>{
           <PostTagItem key={ tag.id }>
             <p>{ tag.symbol }</p>
             <PostTagButton
-              onClick={ () => {
-                setSelectedTags(prev => prev.filter(coin => coin.id!==tag.id))
-              } }>
+              onClick={ () => removeCoinTag(tag) }>
               <SrOnly>Remove { tag.name }</SrOnly>
             </PostTagButton>
           </PostTagItem>
