@@ -52,7 +52,7 @@ const Communities = ({ posts }: CommunitiesProps) =>{
             { posts?.map(post => (
               <FeedsListItem key={ post.postId }>
                 <Link
-                  href={ "/posts" + post.postId }
+                  href={ "/posts/" + post.postId }
                   passHref>
                   <FeedsItemLink />
                 </Link>

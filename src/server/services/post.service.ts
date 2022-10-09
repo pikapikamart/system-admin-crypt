@@ -43,3 +43,7 @@ export const findPostPopulatorService = async(
 export const findAllPostAggregator = async( aggregate: PipelineStage[] ) => (
   postModel.aggregate(aggregate)
 )
+
+export const findAllPostIds = async() =>(
+  postModel.find({}, "-_id postId", { lean: true })
+)
