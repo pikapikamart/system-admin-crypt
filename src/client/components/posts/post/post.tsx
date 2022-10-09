@@ -28,7 +28,7 @@ const Post = ({ post }: PostProps) =>{
         <PostContentContainer>
           <PostOwnerName>
             { post.owner.username }
-            <span>{ post.owner.email }</span>
+            <span>@{ post.owner.email }</span>
           </PostOwnerName>
           <PostContent>{ post.content }</PostContent>
           <PostTagsList>

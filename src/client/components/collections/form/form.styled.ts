@@ -54,3 +54,10 @@ export const FormOptions = styled.div`
     }
   }
 `
+
+export const FormDescription = styled.p`
+  color: ${ ({ theme }) => theme.colors.dark2 };
+  font-size: ${ rem(18) };
+  line-height: 1.5;
+  text-align: center;
+`

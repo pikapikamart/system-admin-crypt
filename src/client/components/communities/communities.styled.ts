@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { rem } from "@/styled/functions";
-import { RowCenter } from "@/styled/shared/helpers";
+import { ColumCenterCenter, RowCenter } from "@/styled/shared/helpers";
 
 
 export const MainWrapper = styled.main`
@@ -124,11 +124,89 @@ export const FeedsItemTag = styled.li`
 
 export const FeedsItemComments = styled.div`
   background: url("/icons/comments.svg") no-repeat left center;
+  display: flex;
   height: ${ rem(20) };
+  max-width: max-content;
+  position: relative;
+  z-index: 20;
 
   > p {
     color: ${ ({ theme }) => theme.colors.darkBlue };
     font-weight: 500;
     margin-left: ${ rem(24) };
   }
+`
+
+export const FeedsItemOptions = styled.button`
+  background: url("/icons/option.svg") no-repeat center center;
+  border-radius: ${ rem(8) };
+  border: 1px solid transparent;
+  height: ${ rem(28) };
+  margin-left: ${ rem(16) };
+  transition: border-color .3s ease;
+  width: ${ rem(32) };
+
+  &:hover {
+    border-color: ${ ({ theme }) => theme.colors.greyBlue };
+  }
+
+  &[aria-expanded="true"] + ul {
+    opacity: 1;
+    visibility: visible;
+  }
+`
+
+export const FeedsItemDropdown = styled(ColumCenterCenter)`
+  align-items: flex-start;
+  border-radius: ${ rem(4) };
+  height: ${ rem(70) };
+  inset: 50% 0 auto auto;
+  list-style: none;
+  opacity: 0;
+  padding: 0 ${ rem(16) };
+  position: absolute;
+  transform: translate(120%, -50%);
+  transition: opacity .3s ease, visibility .3s ease;
+  visibility: hidden;
+  width: ${ rem(126) };
+
+  ${ ({ theme: { colors } }) => `
+    background-color: ${ colors.white1 };
+    border: 1px solid ${ colors.grey3 };
+
+    &::before {
+      content: "";
+      background: url("/icons/arrow.svg") no-repeat center center;
+      height: ${ rem(18) };
+      inset: 50% auto auto 0;
+      position: absolute;
+      transform: translate(-80%, -50%);
+      width: ${ rem(22) };
+    }
+
+    &::after {
+      content: "";
+      background-color: ${ colors.white1 };
+      height: ${ rem(24) };
+      inset: 50% auto auto 0;
+      position: absolute;
+      transform: translate(0, -50%);
+      width: ${ rem(4) };
+    }
+  ` }
+`
+
+export const FeedsDropdownItem = styled.li`
+  
+  ${ ({ theme: { colors }}) => `
+    color: ${ colors.dark2 };
+
+    &:first-of-type {
+      margin-bottom: ${ rem(4) };
+    }
+
+    &:last-of-type {
+      color: ${ colors.red };
+    }
+  ` }
 `
