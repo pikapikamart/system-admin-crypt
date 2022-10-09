@@ -8,6 +8,7 @@ import {
   PostTextarea,
   PostTextareaWrapper,
   PostTagSubmit,
+  PostContentContainer,
  } from "./post.styled"
 import { PostTags } from "./tags";
 
@@ -23,16 +24,18 @@ const Post = ({ content, selectedCoins }: PostProps) => {
 
   return (
     <PostWrapper onSubmit={ event => event.preventDefault() }>
-      <CurrentUser>{ user.username? user.username : "Guest" }</CurrentUser>
-      <PostTextareaWrapper>
-        <PostTextarea
-          rows={ 6 } 
-          placeholder="How do you feel about the market today? Share your ideas" />
-        <InputError>Please enter a value</InputError>
-      </PostTextareaWrapper>
-      <PostTags coins={ query.data?.data?? [] } selectedCoins={ [] } />
-      <PostTagSubmit type="submit">Post
-      </PostTagSubmit>
+      <PostContentContainer>
+        <CurrentUser>{ user.username? user.username : "Guest" }</CurrentUser>
+        <PostTextareaWrapper>
+          <PostTextarea
+            rows={ 6 } 
+            placeholder="How do you feel about the market today? Share your ideas" />
+          <InputError>Please enter a value</InputError>
+        </PostTextareaWrapper>
+        <PostTags coins={ query.data?.data?? [] } selectedCoins={ [] } />
+        <PostTagSubmit type="submit">Post
+        </PostTagSubmit>
+      </PostContentContainer>
     </PostWrapper>
   )
 }

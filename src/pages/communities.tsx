@@ -5,8 +5,14 @@ import {
   InferGetServerSidePropsType, 
   NextPage } from "next";
 import { connectDatabase } from "../server/database";
+import { Post } from "../server/models/post.model";
 import { findAllPostAggregator } from "../server/services/post.service";
 
+
+export type PostCreation = Post & {
+  createdAt: Date,
+  updatedAt: Date
+}
 
 const CommunitiesPage: NextPage<InferGetServerSidePropsType<GetServerSideProps>> = ({ posts }) => {
   
@@ -34,7 +40,7 @@ export const getServerSideProps = async( context: GetServerSidePropsContext ) =>
 
   return {
     props: {
-      posts: JSON.parse(JSON.stringify(posts))
+      posts: JSON.parse(JSON.stringify(posts)) as PostCreation[]
     }
   }
 }

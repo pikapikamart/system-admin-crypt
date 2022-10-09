@@ -21,7 +21,7 @@ export type Post = {
 }
 
 export type PostDocument = Post & mongoose.Document & {
-  createAt: Date,
+  createdAt: Date,
   updatedAt: Date
 }
 

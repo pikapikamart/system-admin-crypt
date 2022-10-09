@@ -9,6 +9,7 @@ export const BaseModalWrapper = styled.div`
   outline: none;
   overflow-y: scroll;
   position: fixed;
+  z-index: 100;
 `
 
 export const ModalExit = styled.div`

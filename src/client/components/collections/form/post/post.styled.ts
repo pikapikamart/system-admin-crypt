@@ -4,11 +4,17 @@ import { RowCenter } from "@/styled/shared/helpers";
 
 
 export const PostWrapper = styled.form`
+  border-bottom: 1px solid ${ ({ theme }) => theme.colors.white4 };
+  padding-bottom: ${ rem(48) };
+`
+
+export const PostContentContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr ${ rem(84) };
   gap: ${ rem(24) } ${ rem(16) };
   grid-template-rows: repeat(3, auto);
   max-width: ${ rem(576) };
+  margin: auto;
 `
 
 export const CurrentUser = styled.p`
