@@ -1,6 +1,8 @@
-import { compareDate, formatDate } from "@/components/communities/communities"
+import { ReplyForm } from "@/components/collections/form/reply"
+import { compareDate } from "@/components/communities/communities"
 import { PostCreation } from "@/pages/communities"
 import { SrOnly } from "@/styled/shared/helpers"
+import { CommentsSection } from "./comments"
 import { 
   PostWrapper,
   ContentContainer,
@@ -39,6 +41,8 @@ const Post = ({ post }: PostProps) =>{
             { compareDate(post.createdAt, post.updatedAt)? "" : " (edited)" }
           </PostDate>
         </PostContentContainer>
+        <ReplyForm postId={ post.postId } />
+        <CommentsSection comments={ post.replies?? [] }/>
       </ContentContainer>
     </PostWrapper>
   )
