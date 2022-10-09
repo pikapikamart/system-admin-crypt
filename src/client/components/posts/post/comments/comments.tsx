@@ -1,4 +1,3 @@
-import { formatDate } from "@/components/communities/communities"
 import { Reply } from "@/src/server/models/post.model"
 import { 
   CommentsWrapper,
@@ -7,7 +6,6 @@ import {
   CommentsItem,
   CommentsItemHeader,
   CommentsItemUser,
-  CommentsItemDate,
   CommentsItemContent
  } from "./comments.styled"
 

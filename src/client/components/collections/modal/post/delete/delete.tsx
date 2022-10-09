@@ -3,17 +3,34 @@ import {
   FormOption, 
   FormOptions, 
   FormWrapper } from "@/components/collections/form/form.styled"
+import { trpc } from "@/lib/trpc"
+import { useRouter } from "next/router"
+import { useEffect } from "react"
 import { 
   ChildModal, 
   ModalHeading } from "../../modal.styled"
 
 
 type DeleteProps = {
-  handleDeleteConfirmation: () => void,
-  exit: () => void
+  exit: () => void,
+  postId: string
 }
 
-const Delete = ({ handleDeleteConfirmation, exit }: DeleteProps) =>{
+const Delete = ({ exit, postId }: DeleteProps) =>{
+  const mutation = trpc.useMutation(["post.delete"])
+  const router = useRouter()
+
+  const handlePostDeletion = () =>{
+    mutation.mutate({
+      postId
+    })
+  }
+
+  useEffect(() =>{
+    if ( mutation.isSuccess ) {
+      router.reload()
+    }
+  }, [ mutation.isSuccess ])
 
   return(
     <ChildModal>
@@ -25,8 +42,8 @@ const Delete = ({ handleDeleteConfirmation, exit }: DeleteProps) =>{
         <FormDescription>This will remove the post as well  all the replies made to it</FormDescription>
         <FormOptions>
           <FormOption
-            onClick={ handleDeleteConfirmation }
-            colored="red">Delete post</FormOption>
+            colored="red"
+            onClick={ handlePostDeletion }>Delete post</FormOption>
           <FormOption onClick={ exit }>Close</FormOption>
         </FormOptions>
       </FormWrapper>

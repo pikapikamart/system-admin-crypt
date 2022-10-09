@@ -1,1 +1,1 @@
-export { default as DeleteModal } from "./delete"
+export { default as DeletePostModal } from "./delete"
