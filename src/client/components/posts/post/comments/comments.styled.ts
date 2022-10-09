@@ -1,11 +1,10 @@
 import styled from "styled-components"
 import { rem } from "@/styled/functions"
 import { 
-  FeedsItemContent,
-  FeedsItemDate,
-  FeedsItemHeader,
-  FeedsItemUser,
- } from "@/components/communities/communities.styled"
+  PostContent,
+  PostDate,
+  PostHeader, 
+  PostUser } from "@/components/collections/post/post.styled"
 
 
 export const CommentsWrapper = styled.div`
@@ -31,14 +30,14 @@ export const CommentsItem = styled.li`
   }
 `
 
-export const CommentsItemHeader = styled(FeedsItemHeader)``
+export const CommentsItemHeader = styled(PostHeader)``
 
-export const CommentsItemUser = styled(FeedsItemUser)`
+export const CommentsItemUser = styled(PostUser)`
 `
 
-export const CommentsItemDate = styled(FeedsItemDate)`
+export const CommentsItemDate = styled(PostDate)`
 `
 
-export const CommentsItemContent = styled(FeedsItemContent)`
+export const CommentsItemContent = styled(PostContent)`
   margin: ${ rem(8) } 0 0;
 `

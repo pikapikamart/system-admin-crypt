@@ -65,3 +65,12 @@ export const PostDate = styled.p`
   color: ${ ({ theme }) => theme.colors.grey2 };
   font-weight: 500;
 `
+
+export const PostOptionsContainer = styled.div`
+  max-width: max-content;
+  position: relative;
+
+  > button {
+    margin-left: 0;
+  }
+`

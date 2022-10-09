@@ -20,16 +20,18 @@ import { PostTags } from "./tags";
 
 type PostProps = {
   content?: string,
-  selectedCoins?: Coin[]
+  selectedCoins?: Coin[],
+  postId?: string
 }
 
-const Post = ({ content, selectedCoins }: PostProps) => {
+const Post = ({ content, selectedCoins, postId }: PostProps) => {
   const { user } = useSetupUser()
   const router = useRouter()
   const query = trpc.useQuery(["coin.get-names"])
   const [ postTags, setPostTags ] = useState<Coin[]>(selectedCoins?? [])
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const mutation = trpc.useMutation(["post.create"])
+  const editMutation = trpc.useMutation(["post.edit"])
 
   const addCoinTag = ( coinTag: Coin ) => {
     setPostTags(prev => prev.concat([coinTag]))
@@ -46,12 +48,20 @@ const Post = ({ content, selectedCoins }: PostProps) => {
       return
     }
 
-    const postData = {
-      content: textAreaRef.current.value,
-      tags: postTags
+    if ( content ) {
+      editMutation.mutate({
+        postId: postId as string,
+        content: textAreaRef.current.value,
+        tags: postTags
+      })
+
+      return
     }
 
-    mutation.mutate(postData)
+    mutation.mutate({
+      content: textAreaRef.current.value,
+      tags: postTags
+    })
   }
 
   useEffect(() =>{
@@ -59,6 +69,12 @@ const Post = ({ content, selectedCoins }: PostProps) => {
       router.reload()
     }
   }, [ mutation.isSuccess ])
+
+  useEffect(() =>{
+    if ( editMutation.isSuccess ) {
+      router.replace("/posts/" + postId as string)
+    }
+  }, [ editMutation.isSuccess ])
  
   return (
     <PostWrapper onSubmit={ handlePostSubmit }>
@@ -79,7 +95,7 @@ const Post = ({ content, selectedCoins }: PostProps) => {
           selectedTags={ postTags } />
         <PostTagSubmit 
           available={ user.userId!=="" }
-          type="submit">Post
+          type="submit">{ content? "Update" : "Post" }
         </PostTagSubmit>
       </PostContentContainer>
     </PostWrapper>

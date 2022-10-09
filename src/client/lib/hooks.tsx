@@ -267,7 +267,7 @@ export const useTablistSelection = () => {
 }
 
 export const useSetupUser = () =>{
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const dispatch = useAppDispatch()
   const user = useAppSelector(selectUser)
   const query = trpc.useQuery(["user.get-profile"], {
@@ -288,7 +288,8 @@ export const useSetupUser = () =>{
   }, [ query ])
 
   return {
-    user
+    user,
+    status
   }
 }
 

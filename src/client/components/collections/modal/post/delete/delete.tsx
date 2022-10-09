@@ -20,7 +20,9 @@ const Delete = ({ exit, postId }: DeleteProps) =>{
   const mutation = trpc.useMutation(["post.delete"])
   const router = useRouter()
 
-  const handlePostDeletion = () =>{
+  const handlePostDeletion = ( event: React.FormEvent ) =>{
+    event.preventDefault()
+
     mutation.mutate({
       postId
     })
@@ -28,7 +30,11 @@ const Delete = ({ exit, postId }: DeleteProps) =>{
 
   useEffect(() =>{
     if ( mutation.isSuccess ) {
-      router.reload()
+      if ( router.query.post ) {
+        router.replace("/communities")
+      } else {
+        router.reload()
+      }
     }
   }, [ mutation.isSuccess ])
 
@@ -38,13 +44,17 @@ const Delete = ({ exit, postId }: DeleteProps) =>{
         align="center"
         id="modal-heading">Continue deleting this post?
       </ModalHeading>
-      <FormWrapper as="form">
+      <FormWrapper 
+        as="form"
+        onSubmit={ handlePostDeletion }>
         <FormDescription>This will remove the post as well  all the replies made to it</FormDescription>
         <FormOptions>
           <FormOption
             colored="red"
-            onClick={ handlePostDeletion }>Delete post</FormOption>
-          <FormOption onClick={ exit }>Close</FormOption>
+            type="submit">Delete post</FormOption>
+          <FormOption 
+            onClick={ exit }
+            type="button">Close</FormOption>
         </FormOptions>
       </FormWrapper>
     </ChildModal>

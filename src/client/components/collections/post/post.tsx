@@ -1,6 +1,6 @@
 import { useExpansion } from "@/lib/hooks"
 import { PostCreation } from "@/pages/communities"
-import { SrOnly } from "@/styled/shared/helpers"
+import { BlockLink, SrOnly } from "@/styled/shared/helpers"
 import Link from "next/link"
 import { useState } from "react"
 import { ParentModal } from "../modal"
@@ -83,7 +83,11 @@ const Post = ({ post, isOwned }: PostProps) =>{
               </PostOptions>
               <PostDropdownList as="ul">
                 <PostDropdownItem>
-                  <button>Edit</button>
+                  <Link
+                    href={ `/edit/${ post.postId }` }
+                    passHref>
+                    <BlockLink>Edit</BlockLink>
+                  </Link>
                 </PostDropdownItem>
                 <PostDropdownItem>
                   <button onClick={ handleDeletePost }>Delete</button>

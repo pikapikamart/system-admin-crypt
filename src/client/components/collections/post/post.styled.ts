@@ -176,6 +176,7 @@ export const PostDropdownList = styled(ColumCenterCenter)`
 `
 
 export const PostDropdownItem = styled.li`
+  width: 100%;
   
   ${ ({ theme: { colors }}) => `
     color: ${ colors.dark2 };
