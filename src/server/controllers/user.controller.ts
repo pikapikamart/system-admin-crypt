@@ -4,7 +4,7 @@ import {
   LoginUserSchema, 
   UpdateUserSchema, 
   UserSchema } from "../schemas/user.schema";
-import { findAllPostAggregator } from "../services/post.service";
+import { findAllPostAggregator, updateManyPostService } from "../services/post.service";
 import { 
   createUserService, 
   findUserService, 
@@ -109,10 +109,25 @@ export const coinWatchlistHandler = async( { user }: UserContext, coin: CoinSche
 
 export const updateProfileHandler = async( { user }: UserContext, update: UpdateUserSchema ) => {
 
-  await updateUserService(
+  const updatedUser = await updateUserService(
     { email: user.email },
-    update
+    update,
+    {
+      returnDocument: "after"
+    }
   )
+
+  console.log(user)
+  console.log(updatedUser)
+
+  if ( updatedUser && user.username!==updatedUser.username ) {
+    await updateManyPostService(
+      { "owner.username": user.username }, 
+      {
+        "owner.username": updatedUser.username
+      }
+    )
+  }
 
   return trpcSuccess(true, "Profile has been updated")
 }

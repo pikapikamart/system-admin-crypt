@@ -10,10 +10,11 @@ type InputProps = {
   labelText: string,
   name: string,
   addFieldRef: AddFieldRef,
-  type: string
+  type: string,
+  defaultValue?: string
 }
 
-const Input = ( { labelText, name, addFieldRef, type }: InputProps ) =>{
+const Input = ( { labelText, name, addFieldRef, type , defaultValue}: InputProps ) =>{
 
   return (
     <InputContainer>
@@ -23,6 +24,7 @@ const Input = ( { labelText, name, addFieldRef, type }: InputProps ) =>{
         id={ name }
         name={ name }
         type={ type }
+        defaultValue={ defaultValue ?? "" }
         ref={ addFieldRef }
         aria-required="true" />
       <InputError>Enter a valid { name } value</InputError>

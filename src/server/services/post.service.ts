@@ -47,3 +47,10 @@ export const findAllPostAggregator = async( aggregate: PipelineStage[] ) => (
 export const findAllPostIds = async() =>(
   postModel.find({}, "-_id postId", { lean: true })
 )
+
+export const updateManyPostService = async(
+  filter: FilterQuery<Post>,
+  update: UpdateQuery<Post>
+) => (
+  postModel.updateMany(filter, update)
+)

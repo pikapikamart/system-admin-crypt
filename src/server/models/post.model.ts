@@ -16,6 +16,7 @@ export type Post = {
   postId: string,
   owner: Owner,
   content: string,
+  isEdited?: boolean,
   tags?: Coin[],
   replies?: Reply[]
 }
@@ -39,6 +40,7 @@ const postSchema: mongoose.Schema<PostDocument> = new mongoose.Schema({
     type: String,
     required: true
   },
+  isEdited: Boolean,
   tags: [{
     id: String,
     symbol: String,

@@ -67,7 +67,8 @@ const Post = ({ post }: PostProps) =>{
             </PostTagsList>
             <PostDate>
               { new Date(post.createdAt).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }
-              { compareDate(post.createdAt, post.updatedAt)? "" : " (edited)" }
+              {/* { compareDate(post.createdAt, post.updatedAt)? "" : " (edited)" } */}
+              { post.isEdited? "(edited)" : "" }
             </PostDate>
             { user.posts?.find(singlePost => singlePost.postId===post.postId) && (
               <PostOptionsContainer>

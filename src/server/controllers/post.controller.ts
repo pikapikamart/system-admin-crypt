@@ -125,7 +125,10 @@ export const editPostHandler = async( { user }: UserContext, editBody: EditPostS
 
   await updatePostService(
     { postId: editBody.postId },
-    restEdit
+    {
+      ...restEdit,
+      isEdited: true
+    }
   )
 
   return trpcSuccess(true, "Successfully updated post")

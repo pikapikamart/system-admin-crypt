@@ -63,7 +63,8 @@ const Post = ({ post, isOwned }: PostProps) =>{
           </PostUser>
           <PostDate>
             { formatDate(post.createdAt) }
-            { compareDate(post.createdAt, post.updatedAt)? "" : " (edited)" }
+            {/* { compareDate(post.createdAt, post.updatedAt)? "" : " (edited)" } */}
+            { post.isEdited? "(edited)" : "" }
           </PostDate>
         </PostHeader>
         <PostContent>{ post.content }</PostContent>

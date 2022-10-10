@@ -24,7 +24,8 @@ export const createUserService = async( user: DocumentDefinition<User> ) => (
 
 export const updateUserService = async(
   query: FilterQuery<User>,
-  update: UpdateQuery<User>
+  update: UpdateQuery<User>,
+  options: QueryOptions<User> = {}
 ) => (
-  userModel.findOneAndUpdate(query, update)
+  userModel.findOneAndUpdate(query, update, options)
 )

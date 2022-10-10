@@ -12,7 +12,7 @@ const Home = () => {
     <MainWrapper>
       <ContentContainer>
         <MainHeading>Today's Cryptocurrency</MainHeading>
-        <TabbedInterface selectionNames={ ["All", "Trending"] }>
+        <TabbedInterface selectionNames={ ["All"] }>
           <AllCoins />
         </TabbedInterface>
       </ContentContainer>

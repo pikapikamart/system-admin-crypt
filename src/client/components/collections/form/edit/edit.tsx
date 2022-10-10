@@ -1,4 +1,4 @@
-import { useFormValidation } from "@/lib/hooks"
+import { useFormValidation, useSetupUser } from "@/lib/hooks"
 import { trpc } from "@/lib/trpc"
 import { useRouter } from "next/router"
 import { useEffect, useRef } from "react"
@@ -15,6 +15,7 @@ const Edit = () =>{
     getFieldsRef,
     handleFormSubmit
   } = useFormValidation()
+  const { user } = useSetupUser()
   const router = useRouter()
   const mutation = trpc.useMutation(["user.update-profile"])
   const bioRef = useRef<HTMLTextAreaElement | null>(null)
@@ -49,6 +50,7 @@ const Edit = () =>{
           labelText="Username"
           name="username"
           type="text"
+          defaultValue={ user.username }
           addFieldRef={ addFieldRef }
         />
         <InputContainer>
@@ -57,6 +59,7 @@ const Edit = () =>{
             as="textarea"
             id="bio"
             name="bio"
+            defaultValue={ user.bio?? "" }
             rows={ 5 }
             ref={ bioRef } />
         </InputContainer>

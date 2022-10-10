@@ -43,7 +43,7 @@ const User = ({ user }: UserProps) =>{
           <UserContentContainer>
             <UserHeader>
               <UserName>{ user.username }</UserName>
-              <UserEmail>{ user.email.split("@")[0] }</UserEmail>
+              <UserEmail>@{ user.email.split("@")[0] }</UserEmail>
               { user.bio && (
                 <UserBio>{ user.bio }</UserBio>
               ) }
