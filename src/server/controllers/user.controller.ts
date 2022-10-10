@@ -63,7 +63,7 @@ export const getProfileHandler = async( { user }: UserContext ) => {
   return trpcSuccess(true, restUser)
 }
 
-// --------Queries--------
+// --------Mutations--------
 
 export const signupUserHandler = async( signupBody: UserSchema ) => {
   const foundUser = await findUserService({ email: signupBody.email })
