@@ -148,4 +148,5 @@ export const CoinDescription = styled.p`
   font-size: ${ rem(15) };
   line-height: 2;
   margin-top: ${ rem(32) };
+  white-space: pre-wrap;
 `

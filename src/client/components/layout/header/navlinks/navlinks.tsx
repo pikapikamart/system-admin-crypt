@@ -1,3 +1,4 @@
+import { useSetupUser } from "@/lib/hooks";
 import { coinSchema } from "@/src/server/schemas/coin.schema";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -24,6 +25,7 @@ const Navlinks = () =>{
   const router = useRouter()
   const currentPath = router.pathname.split("/")[1]
   const { data } = useSession()
+  const { user } = useSetupUser()
 
   const renderLinks = () =>{
     const links = currentLinks.map(link => 
@@ -46,10 +48,10 @@ const Navlinks = () =>{
     <HeaderNavbar aria-label="primary">
       <HeaderNavlinks as="ul">
         { renderLinks() }
-        { data && (
+        { data && user && (
           <NavlinksItem >
             <Link
-              href={ "/profile" }
+              href={ "/user/" + user.username }
               passHref>
               <Navlink
                 aria-current={ currentPath==="profile" ? "page": false }>

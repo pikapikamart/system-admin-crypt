@@ -1,3 +1,4 @@
+import { EditForm } from "../../form/edit"
 import { 
   ChildModal, 
   ModalHeading } from "../modal.styled"
@@ -13,9 +14,9 @@ const Edit = ({ exit }: EditProps) =>{
     <ChildModal>
       <ModalHeading 
         align="left"
-        id="modal-heading">
-
+        id="modal-heading">Edit Profile
       </ModalHeading>
+      <EditForm />
     </ChildModal>
   )
 }

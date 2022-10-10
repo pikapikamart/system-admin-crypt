@@ -22,7 +22,8 @@ export const nextAuthOptions: NextAuthOptions = {
       authorize: async( credentials, req ) => {
         const user = { 
           ...credentials,
-          username: ""
+          username: "",
+          userId: ""
         }
         await connectDatabase()
         const foundUser = await findUserService({ email: user.email })
@@ -32,6 +33,7 @@ export const nextAuthOptions: NextAuthOptions = {
         }
         
         user.username = foundUser.username
+        user.userId = foundUser.userId
         const { password, ...userRest } = user
       
         return userRest
@@ -44,6 +46,7 @@ export const nextAuthOptions: NextAuthOptions = {
       if ( user ) {
         token.email = user.email
         token.username = user.username as string
+        token.userId = user.userId as string
       }
 
       return token
@@ -55,7 +58,8 @@ export const nextAuthOptions: NextAuthOptions = {
         user: {
           ...session.user,
           username: token.username,
-          email: token.email
+          email: token.email,
+          userId: token.userId
         }
       }
 

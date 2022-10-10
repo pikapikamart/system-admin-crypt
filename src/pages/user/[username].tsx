@@ -63,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async( context ) => {
     foundUser.watchlist = undefined
   }
 
-  if ( token && token.username!==foundUser.username ) {
+  if ( token && token.userId!==foundUser.userId ) {
     foundUser.watchlist = undefined
   }
 

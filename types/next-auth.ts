@@ -7,7 +7,8 @@ declare module "next-auth" {
   interface Session {
     user?: {
       email?: string | null,
-      username: string | null
+      username: string | null,
+      userId?: string | null
   };
   expires: ISODateString;
   }
@@ -16,6 +17,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     email?: string | null,
-    username: string | null
+    username: string | null,
+    userId?: string | null
   }
 }
