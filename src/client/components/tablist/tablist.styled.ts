@@ -4,6 +4,7 @@ import { RowCenter } from "@/styled/shared/helpers"
 
 
 export const TablistWrapper = styled.div`
+  position: relative;
 `
 
 export const TabSelection = styled(RowCenter)`

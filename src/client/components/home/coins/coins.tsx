@@ -11,7 +11,7 @@ import {
   CoinPrice, 
   CoinPercentage,
   TableHead,
-  TableBody } from "./all.styled";
+  TableBody } from "./coins.styled";
 
 
 const AllCoins = () =>{

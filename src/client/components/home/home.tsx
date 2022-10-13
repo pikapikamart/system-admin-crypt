@@ -1,19 +1,26 @@
+import { NFT } from "@/src/server/models/nft.model"
 import { TabbedInterface } from "../tablist"
-import { AllCoins } from "./coins/all"
+import { Coins } from "./coins"
 import { 
   ContentContainer, 
   MainHeading, 
   MainWrapper } from "./home.styled"
+import { Nfts } from "./nfts"
 
 
-const Home = () => {
+type HomeProps = {
+  nfts: NFT[]
+}
+
+const Home = ({ nfts }: HomeProps) => {
 
   return(
     <MainWrapper>
       <ContentContainer>
         <MainHeading>Today's Cryptocurrency</MainHeading>
-        <TabbedInterface selectionNames={ ["All"] }>
-          <AllCoins />
+        <TabbedInterface selectionNames={ ["Coins", "Nft's"] }>
+          <Coins />
+          <Nfts nfts={ nfts } />
         </TabbedInterface>
       </ContentContainer>
     </MainWrapper>

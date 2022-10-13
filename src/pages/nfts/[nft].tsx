@@ -1,6 +1,6 @@
 import { connectDatabase } from "@/src/server/database";
 import { NFT } from "@/src/server/models/nft.model";
-import { findMultipleNftService, findMultipleNftServicePopulator, findNftService, findNftServicePopulator } from "@/src/server/services/nft.service";
+import { findMultipleNftService, findNftServicePopulator } from "@/src/server/services/nft.service";
 import { 
   GetStaticPaths, 
   GetStaticPropsContext, 
@@ -11,6 +11,10 @@ import { ParsedUrlQuery } from "querystring";
 
 const NFTPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ( { nft } ) => {
  
+  if ( !nft ) {
+    return <></>
+  }
+
   return (
     // <Coin coin={ coin } />
     <></>
@@ -35,7 +39,7 @@ export const getStaticPaths: GetStaticPaths = async() =>{
   const nftsIds = nfts.reduce((accu, cur) =>{
     accu.push({
       params: {
-        nft: cur.id
+        nft: cur.nftId
       }
     })
 

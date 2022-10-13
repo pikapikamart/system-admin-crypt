@@ -1,0 +1,1 @@
+export { default as PromoteNftModal } from "./promote"

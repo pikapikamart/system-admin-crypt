@@ -44,7 +44,7 @@ const Tablist = ( { children, selectionNames }: TablistProps ) =>{
       <div 
         id="tablist-content"
         role="tabpanel"
-        aria-labelledby={ `selection-${ currentTabindex }` }>{ Array.isArray(children) ? children[0] : children }
+        aria-labelledby={ `selection-${ currentTabindex }` }>{ Array.isArray(children) ? children[currentTabindex] : children }
       </div>
     </TablistWrapper>
   )
