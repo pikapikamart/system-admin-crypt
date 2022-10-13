@@ -117,7 +117,7 @@ const Promote = ({ exit }: PromoteProps) =>{
             name="name"
             type="text"
             addFieldRef={ addFieldRef } />
-        <InputContainer style={{ "max-width": "100%" }}>
+        <InputContainer style={{ "maxWidth": "100%" }}>
           <InputLabel htmlFor="description">Project's description</InputLabel>
           <NftDescription
             as="textarea"
