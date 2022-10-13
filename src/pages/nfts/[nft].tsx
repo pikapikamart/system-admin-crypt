@@ -1,3 +1,4 @@
+import { Nft } from "@/components/nfts/nft";
 import { connectDatabase } from "@/src/server/database";
 import { NFT } from "@/src/server/models/nft.model";
 import { findMultipleNftService, findNftServicePopulator } from "@/src/server/services/nft.service";
@@ -16,8 +17,7 @@ const NFTPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ( { nf
   }
 
   return (
-    // <Coin coin={ coin } />
-    <></>
+    <Nft nft={ nft } />
   )
 }
 

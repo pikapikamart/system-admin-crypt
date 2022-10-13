@@ -38,6 +38,7 @@ export const NftImage = styled.img`
 `
 
 export const NftContentContainer = styled.div`
+  flex-basis: calc(100% - ${ rem(104) });
   margin-left: ${ rem(16) };
 `
 
@@ -77,6 +78,7 @@ export const NftOwner = styled.p`
 export const NftLinks = styled.ul`
   display: flex;
   margin: ${ rem(4) } 0 0 auto;
+  max-width: max-content;
 `
 
 export const NftLink = styled.li`
