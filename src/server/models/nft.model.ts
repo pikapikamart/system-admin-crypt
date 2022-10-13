@@ -1,16 +1,10 @@
 import mongoose from "mongoose"
+import { NFTSchema } from "../schemas/nft.schema"
 
 
-export type NFT = {
+export type NFT = NFTSchema & {
   nftId: string,
   owner: string,
-  image: string,
-  name: string,
-  description: string,
-  isLive: boolean,
-  twitter: string,
-  binance?: string,
-  website: string
 }
 
 export type NFTDocument = NFT & mongoose.Document & {

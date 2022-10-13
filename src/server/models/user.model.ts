@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 import { PostDocument } from "./post.model"
+import { NFTDocument } from "./nft.model"
 
 
 export type Coin = {
@@ -17,7 +18,8 @@ export type User = {
   password: string,
   bio?: string,
   watchlist?: Coin[],
-  posts?: PostDocument["_id"][]
+  posts?: PostDocument["_id"][],
+  nfts?: NFTDocument["_id"][]
 }
 
 export type UserDocument = User & mongoose.Document & {
@@ -56,6 +58,10 @@ const userSchema: mongoose.Schema<UserDocument> = new mongoose.Schema({
   posts: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Post"
+  }],
+  nfts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "NFT"
   }]
 })
 
